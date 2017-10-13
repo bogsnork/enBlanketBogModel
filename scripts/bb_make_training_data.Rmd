@@ -38,8 +38,6 @@ aspect <- raster("../data/topo_env_data.tif", band = 6)
 
 # Import UKCP09 climate data
 #load(file = "../data/ukcp09GriddedDataAnnPrepd.rda")
-elev <- raster("../data/topo_env_data.tif", band = 1)
-"../data/ukcp09GriddedDataAnnPrepd.tif"
 gdd_1960_90_ann <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 1)
 gsl_1960_90_ann <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 2)
 rain_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 3)
