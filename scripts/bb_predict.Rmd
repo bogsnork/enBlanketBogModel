@@ -16,11 +16,12 @@ library(doParallel)
 ## Load data
 ```{r}
 # model
-load("../data/models/Mrf2final.rds")
-Model <- M.rf.2.final 
-rm(M.rf.2.final)
+load("../data/models/Mrf3final.rds")
+Model <- M.rf.3.final 
+rm(M.rf.3.final)
 
 #predictors
+
 
 # Import environmental and topographic data
 elev <- raster("../data/topo_env_data.tif", band = 1)
@@ -46,6 +47,8 @@ temp_max_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band 
 
 make a raster stack
 ```{r}
+Model$coefnames
+
 predictors <- stack(
   elev, surf, inflow, outflow, slope, aspect,
   gdd_1960_90_ann, gsl_1960_90_ann,
@@ -54,6 +57,10 @@ predictors <- stack(
   temp_mean_1960_90_annual, temp_min_1960_90_annual, 
   temp_max_1960_90_annual
 )
+
+names(predictors) <- c("elev", "aspect", "slope", "outflow", "inflow", "surf", 
+                       "gdd", "gsl", "rain_ann", "rain_daily", "raindays_10mm", 
+                       "raindays_1mm", "temp_mean", "temp_min", "temp_max")
 ```
 
 crop to training data extent
@@ -72,6 +79,9 @@ predictors <- raster::crop(x = predictors, y = boundbox)
 output <- raster::predict(predictors, Model, type="raw", progress="text")
 
 writeRaster(x = output, filename = "../outputs/BlanketBogRFModel.tif")
+
+plot(output)
+
 ```
 
 

@@ -58,26 +58,26 @@ table(testing$bbog)
 #### run model
 Need the latest version of caret from github to avoid known bug.
 ```{r}
-M.rf.2 <- train(bbog ~ .,
+M.rf.3 <- train(bbog ~ .,
                 data=training, 
                 method = "rf")
 
-save(M.rf.2, file = "../data/models/Mrf2.rds")
+save(M.rf.3, file = "../data/models/Mrf3.rds")
 
-M.rf.2
+M.rf.3
 ```
 Tuning information: optimal number of trees at each split is 9
 
 
 ```{r}
-plot(varImp(object= M.rf.2), main= "RF - Variable Importance")
+plot(varImp(object= M.rf.3), main= "RF - Variable Importance")
 ```
 
 ### Predict from model
 
 ```{r}
 #Predictions
-predictions <- predict(object = M.rf.2, newdata = testing, type="raw")
+predictions <- predict(object = M.rf.3, newdata = testing, type="raw")
 table(predictions)
 
 confusionMatrix(predictions, testing[,"bbog"])
@@ -86,13 +86,13 @@ confusionMatrix(predictions, testing[,"bbog"])
 ### run final model
 
 ```{r}
-M.rf.2.final.final <- train(bbog ~ .,
+M.rf.3.final <- train(bbog ~ .,
                 data = input.data, 
                 method = "rf")
 
-save(M.rf.2.final, file = "../data/models/Mrf2final.rds")
+save(M.rf.3.final, file = "../data/models/Mrf3final.rds")
 
-M.rf.2.final
+M.rf.3.final
 ```
 
 
