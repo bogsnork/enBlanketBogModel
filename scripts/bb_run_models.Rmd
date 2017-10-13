@@ -86,13 +86,15 @@ confusionMatrix(predictions, testing[,"bbog"])
 ### run final model
 
 ```{r}
-M.rf.3.final <- train(bbog ~ .,
-                data = input.data, 
-                method = "rf")
-
-save(M.rf.3.final, file = "../data/models/Mrf3final.rds")
+# M.rf.3.final <- train(bbog ~ .,
+#                 data = input.data, 
+#                 method = "rf")
+# 
+# save(M.rf.3.final, file = "../data/models/Mrf3final.rds")
 
 M.rf.3.final
+
+M.rf.3.final$coefnames
 ```
 
 
