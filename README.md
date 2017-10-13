@@ -8,6 +8,38 @@ output: html_document
 ## About
 We are developing a model which can predict the presence of blanket bog where it is found in England.    
 
+## Progress
+A number of random forest models have been fitted for Cumbria, and one model has been chosen to predict blanket bog in Cumbria. 
+
+###Model details: 
+
+M.rf.3.final
+Random Forest 
+
+1106 samples
+  15 predictor
+   2 classes: 'absent', 'present' 
+
+No pre-processing
+Resampling: Bootstrapped (25 reps) 
+Summary of sample sizes: 1106, 1106, 1106, 1106, 1106, 1106, ... 
+Resampling results across tuning parameters:
+
+  mtry  Accuracy   Kappa    
+   2    0.9349493  0.8686078
+   8    0.9341944  0.8671090
+  15    0.9301934  0.8589484
+
+Accuracy was used to select the optimal model using the largest value.
+The final value used for the model was mtry = 2.
+
+Coefficients:
+"elev"          "aspect"        "slope"         "outflow"       "inflow"       
+"surf"          "gdd"           "gsl"           "rain_ann"      "rain_daily"   
+"raindays_10mm" "raindays_1mm"  "temp_mean"     "temp_min"      "temp_max"   
+
+See notebook/bb_run_models.3.nb.html for more info. 
+
 ## Source Data
 
 ### Predictors
@@ -61,6 +93,7 @@ This project was carried out in `R` (R Core Team, 2016) and is a mixture of `R s
 |bb_input_data.Rmd|Rmarkdown|Creates input dataset for models by extracting location info from peat depth file and extracting predictor variables from rasters|
 |bb_model_selection.Rmd|Rmarkdown|Runs a number of models and assesses performance|
 |bb_model_run.Rmd|Rmarkdown|Runs final model and creates final outputs|
+|bb_predict.Rmd|Rmarkdown|Uses model to predict blanket bog with a raster stack of predictors|
 
 
 ## References
