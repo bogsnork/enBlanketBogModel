@@ -38,7 +38,17 @@ aspect <- raster("../data/topo_env_data.tif", band = 6)
 
 # Import UKCP09 climate data
 #load(file = "../data/ukcp09GriddedDataAnnPrepd.rda")
-
+elev <- raster("../data/topo_env_data.tif", band = 1)
+"../data/ukcp09GriddedDataAnnPrepd.tif"
+gdd_1960_90_ann <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 1)
+gsl_1960_90_ann <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 2)
+rain_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 3)
+rain_daily_mean_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 4)
+raindays_1mm_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 5)
+raindays_10mm_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 6)
+temp_mean_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 7)
+temp_min_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 8)
+temp_max_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 9)
 
 ```
 
@@ -63,6 +73,20 @@ rm(observationsSPDF)
 # make a logical vector for blanket bog presence
 observations$bbog <- if_else(observations$Detailed == "Blanket Bog", true = "present", false = "absent")
 ```
+
+reduce the number of absences to balance the dataset
+```{r}
+indexSubset <- c(
+  sample(x = which(observations$bbog %in% "absent"), #a subset of absences
+       size = which(observations$bbog %in% "present"), #same number as presence
+       replace = FALSE), 
+  which(observations$bbog %in% "present") #index of presence
+)
+length(indexSubset); str(indexSubset)
+
+observations <- observations[indexSubset,]; dim(observations) #subset the observations dataset
+```
+
 
 ## Create input dataset
 
