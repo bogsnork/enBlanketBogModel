@@ -92,10 +92,6 @@ observations <- observations[indexSubset,]; dim(observations) #subset the observ
 #create dataframe with peat depth as first col
 input.data <- data.frame(bbog = observations$bbog)
 
-#populate longitude and lattitude
-input.data$east <- coordinates(observations)[,1]
-input.data$north <- coordinates(observations)[,2]
-
 #raster::extract environmental and topographic data for each peat depth measurement
 input.data$elev <- raster::extract(
   elev, coordinates(observations)[,1:2])
