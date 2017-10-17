@@ -5,7 +5,7 @@ output: html_notebook
 
 
 ## Packages 
-```{r}
+```{r, include=FALSE}
 library(raster)
 library(rgdal)
 ```
