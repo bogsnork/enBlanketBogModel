@@ -50,10 +50,10 @@ make a raster stack
 Model$coefnames
 
 predictors <- stack(
-  elev, surf, inflow, outflow, slope, aspect,
+  elev, aspect, slope, outflow, inflow, surf,
   gdd_1960_90_ann, gsl_1960_90_ann,
   rain_1960_90_annual, rain_daily_mean_1960_90_annual,
-  raindays_1mm_1960_90_annual, raindays_10mm_1960_90_annual,
+  raindays_10mm_1960_90_annual, raindays_1mm_1960_90_annual,
   temp_mean_1960_90_annual, temp_min_1960_90_annual, 
   temp_max_1960_90_annual
 )
@@ -78,7 +78,7 @@ predictors <- raster::crop(x = predictors, y = boundbox)
 ```{r}
 output <- raster::predict(predictors, Model, type="raw", progress="text")
 
-writeRaster(x = output, filename = "../outputs/BlanketBogRFModel.tif")
+writeRaster(x = output, filename = "../outputs/BlanketBogRFModel3a.tif")
 
 plot(output)
 
