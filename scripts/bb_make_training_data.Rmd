@@ -99,12 +99,12 @@ input.data$aspect <- raster::extract(
   aspect, coordinates(observations)[,1:2])
 input.data$slope <- raster::extract(
   slope, coordinates(observations)[,1:2])
-input.data$outflow <- raster::extract(
-  outflow, coordinates(observations)[,1:2])
-input.data$inflow <- raster::extract(
-  inflow, coordinates(observations)[,1:2])
-input.data$surf <- raster::extract(
-  surf, coordinates(observations)[,1:2])
+# input.data$outflow <- raster::extract(
+#   outflow, coordinates(observations)[,1:2])
+# input.data$inflow <- raster::extract(
+#   inflow, coordinates(observations)[,1:2])
+# input.data$surf <- raster::extract(
+#   surf, coordinates(observations)[,1:2])
 
 #raster::extract climate data for each peat depth measurement
 input.data$gdd <- raster::extract(
