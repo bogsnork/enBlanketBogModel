@@ -21,8 +21,6 @@ Model <- M.rf.3.final
 rm(M.rf.3.final)
 
 #predictors
-
-
 # Import environmental and topographic data
 elev <- raster("../data/topo_env_data.tif", band = 1)
 surf <- raster("../data/topo_env_data.tif", band = 2)
@@ -41,6 +39,14 @@ raindays_10mm_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", 
 temp_mean_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 7)
 temp_min_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 8)
 temp_max_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 9)
+
+# Constraining data
+#load observations to get extent
+observationsSPDF <- readOGR(dsn = "../data/FEP_points/Catchment_FEP_OS_TrainingPoints_final_clean.shp", verbose = TRUE)
+
+#load moorland line
+moorlandSPDF <- readOGR(dsn = "../data/Moorland_Line_RPA/Moorland_Line.gdb",
+                        layer = "Moorland_Line", verbose = TRUE)
 ```
 
 ## Prepare data
@@ -63,11 +69,21 @@ names(predictors) <- c("elev", "aspect", "slope", "outflow", "inflow", "surf",
                        "raindays_1mm", "temp_mean", "temp_min", "temp_max")
 ```
 
-crop to training data extent
+## Constrain data
+Crop to moorland boundary
 
 ```{r}
-#load observations to get extent
-observationsSPDF <- readOGR(dsn = "../data/FEP_points/Catchment_FEP_OS_TrainingPoints_final_clean.shp", verbose = TRUE)
+## this is really slow: 
+predictors <- raster::crop(x = predictors, y = moorlandSPDF)
+#writeRaster(x = predictors, filename = "../data/predictors_moorlandline.tif")
+#predictors <- raster("../data/predictors_moorlandline.tif")
+#DIDN'T WORK, didn't crop anything... duh????
+```
+
+
+
+crop to training data extent
+```{r}
 boundbox <- observationsSPDF@bbox; boundbox 
 
 predictors <- raster::crop(x = predictors, y = boundbox)
@@ -78,9 +94,10 @@ predictors <- raster::crop(x = predictors, y = boundbox)
 ```{r}
 output <- raster::predict(predictors, Model, type="raw", progress="text")
 
-writeRaster(x = output, filename = "../outputs/BlanketBogRFModel3a.tif")
+writeRaster(x = output, filename = "../outputs/BlanketBogRFModel3b.tif")
 
 plot(output)
+plot(moorlandSPDF, add = T)
 
 ```
 

@@ -14,6 +14,7 @@ library(rgdal)
 ## Import data ----
 ```{r}
 list.files(path = "../data")
+list.files(path = "../data/surface_water")
 ```
 
 
@@ -31,7 +32,10 @@ inflow <- raster("../data/Inflow Pattern © CEH1.tif")
 
 #outflow pattern
 outflow <- raster("../data/Outflow Pattern © CEH1.tif")
+```
 
+```{r}
+water <- raster("../data/")
 ```
 
 ### Calculate derrived data
@@ -41,6 +45,9 @@ slope <- terrain(x = elev, opt = "slope", unit = "radians", neighbors = 8)
 
 aspect <- terrain(x = elev, opt = "aspect", unit = "degrees", neighbors = 8)
 ```
+
+
+
 
 ## Save environmental and topographic data to file
 ```{r}
