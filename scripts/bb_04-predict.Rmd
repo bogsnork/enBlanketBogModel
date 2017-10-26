@@ -79,7 +79,7 @@ predictors <- raster::crop(x = predictors, y = boundbox)
 ```{r}
 output <- raster::predict(predictors, Model, type="raw", progress="text")
 
-writeRaster(x = output, filename = "../outputs/BlanketBogRFModel3a.tif")
+writeRaster(x = output, filename = "../outputs/BlanketBogRFModel5.tif")
 
 plot(output)
 

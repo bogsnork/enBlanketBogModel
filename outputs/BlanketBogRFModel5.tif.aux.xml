@@ -1,0 +1,9 @@
+<PAMDataset>
+  <PAMRasterBand band="1">
+    <CategoryNames>
+      <Category></Category>
+      <Category>absent</Category>
+      <Category>present</Category>
+    </CategoryNames>
+  </PAMRasterBand>
+</PAMDataset>
