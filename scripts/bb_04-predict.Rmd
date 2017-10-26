@@ -17,8 +17,8 @@ library(doParallel)
 ```{r}
 # model
 load("../data/models/Mrf3final.rds")
-Model <- M.rf.3.final 
-rm(M.rf.3.final)
+Model <- M.rf.5.final 
+rm(M.rf.5.final)
 
 #predictors
 
@@ -30,6 +30,7 @@ inflow <- raster("../data/topo_env_data.tif", band = 3)
 outflow <- raster("../data/topo_env_data.tif", band = 4)
 slope <- raster("../data/topo_env_data.tif", band = 5)
 aspect <- raster("../data/topo_env_data.tif", band = 6)
+moorline <- raster("../data/topo_env_data.tif", band = 7)
 
 # Import UKCP09 climate data
 gdd_1960_90_ann <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band = 1)
@@ -50,7 +51,7 @@ make a raster stack
 Model$coefnames
 
 predictors <- stack(
-  elev, aspect, slope, outflow, inflow, surf,
+  elev, aspect, slope, outflow, inflow, surf, moorline,
   gdd_1960_90_ann, gsl_1960_90_ann,
   rain_1960_90_annual, rain_daily_mean_1960_90_annual,
   raindays_10mm_1960_90_annual, raindays_1mm_1960_90_annual,
@@ -58,7 +59,7 @@ predictors <- stack(
   temp_max_1960_90_annual
 )
 
-names(predictors) <- c("elev", "aspect", "slope", "outflow", "inflow", "surf", 
+names(predictors) <- c("elev", "aspect", "slope", "outflow", "inflow", "surf", "moorline",
                        "gdd", "gsl", "rain_ann", "rain_daily", "raindays_10mm", 
                        "raindays_1mm", "temp_mean", "temp_min", "temp_max")
 ```
