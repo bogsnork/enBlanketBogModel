@@ -176,40 +176,11 @@ $(document).ready(function () {
 <h2>Packages</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyYXN0ZXIpXG5gYGAifQ== -->
-<pre class="r"><code>library(raster)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyYXN0ZXIpXG5saWJyYXJ5KHJnZGFsKVxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
+<pre class="r"><code>library(raster)
+library(rgdal)
+library(tidyverse)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBzcFxuIn0= -->
-<pre><code>Loading required package: sp</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZ2RhbClcbmBgYCJ9 -->
-<pre class="r"><code>library(rgdal)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicmdkYWw6IHZlcnNpb246IDEuMi04LCAoU1ZOIHJldmlzaW9uIDY2MylcbiBHZW9zcGF0aWFsIERhdGEgQWJzdHJhY3Rpb24gTGlicmFyeSBleHRlbnNpb25zIHRvIFIgc3VjY2Vzc2Z1bGx5IGxvYWRlZFxuIExvYWRlZCBHREFMIHJ1bnRpbWU6IEdEQUwgMi4wLjEsIHJlbGVhc2VkIDIwMTUvMDkvMTVcbiBQYXRoIHRvIEdEQUwgc2hhcmVkIGZpbGVzOiBDOi9Vc2Vycy91c2VyL0RvY3VtZW50cy9SL3dpbi1saWJyYXJ5LzMuNC9yZ2RhbC9nZGFsXG4gTG9hZGVkIFBST0ouNCBydW50aW1lOiBSZWwuIDQuOS4yLCAwOCBTZXB0ZW1iZXIgMjAxNSwgW1BKX1ZFUlNJT046IDQ5Ml1cbiBQYXRoIHRvIFBST0ouNCBzaGFyZWQgZmlsZXM6IEM6L1VzZXJzL3VzZXIvRG9jdW1lbnRzL1Ivd2luLWxpYnJhcnkvMy40L3JnZGFsL3Byb2pcbiBMaW5raW5nIHRvIHNwIHZlcnNpb246IDEuMi01IFxuIn0= -->
-<pre><code>rgdal: version: 1.2-8, (SVN revision 663)
- Geospatial Data Abstraction Library extensions to R successfully loaded
- Loaded GDAL runtime: GDAL 2.0.1, released 2015/09/15
- Path to GDAL shared files: C:/Users/user/Documents/R/win-library/3.4/rgdal/gdal
- Loaded PROJ.4 runtime: Rel. 4.9.2, 08 September 2015, [PJ_VERSION: 492]
- Path to PROJ.4 shared files: C:/Users/user/Documents/R/win-library/3.4/rgdal/proj
- Linking to sp version: 1.2-5 </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyB0aWR5dmVyc2U6IGdncGxvdDJcbkxvYWRpbmcgdGlkeXZlcnNlOiB0aWJibGVcbkxvYWRpbmcgdGlkeXZlcnNlOiB0aWR5clxuTG9hZGluZyB0aWR5dmVyc2U6IHJlYWRyXG5Mb2FkaW5nIHRpZHl2ZXJzZTogcHVycnJcbkxvYWRpbmcgdGlkeXZlcnNlOiBkcGx5clxuQ29uZmxpY3RzIHdpdGggdGlkeSBwYWNrYWdlcyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1cbmV4dHJhY3QoKTogdGlkeXIsIHJhc3RlclxuZmlsdGVyKCk6ICBkcGx5ciwgc3RhdHNcbmxhZygpOiAgICAgZHBseXIsIHN0YXRzXG5zZWxlY3QoKTogIGRwbHlyLCByYXN0ZXJcbiJ9 -->
-<pre><code>Loading tidyverse: ggplot2
-Loading tidyverse: tibble
-Loading tidyverse: tidyr
-Loading tidyverse: readr
-Loading tidyverse: purrr
-Loading tidyverse: dplyr
-Conflicts with tidy packages ---------------------------------------------------
-extract(): tidyr, raster
-filter():  dplyr, stats
-lag():     dplyr, stats
-select():  dplyr, raster</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -257,21 +228,31 @@ It has 4 fields</code></pre>
 <h3>Import predictor data</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJbXBvcnQgZW52aXJvbm1lbnRhbCBhbmQgdG9wb2dyYXBoaWMgZGF0YVxuI2xvYWQoZmlsZSA9IFwiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnJkYVwiKVxuZWxldiA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSAxKVxuc3VyZiA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSAyKVxuaW5mbG93IDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDMpXG5vdXRmbG93IDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDQpXG5zbG9wZSA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSA1KVxuYXNwZWN0IDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDYpXG5tb29ybGluZSA8LSByYXN0ZXIoLi4vZGF0YS90b3BvX2Vudl9kYXRhLnJpZywgYmFuZCA9IDcpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJbXBvcnQgZW52aXJvbm1lbnRhbCBhbmQgdG9wb2dyYXBoaWMgZGF0YVxuI2xvYWQoZmlsZSA9IFwiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnJkYVwiKVxuXG5lbGV2IDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDEpXG5zdXJmIDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDIpXG5pbmZsb3cgPC0gcmFzdGVyKFwiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnRpZlwiLCBiYW5kID0gMylcbm91dGZsb3cgPC0gcmFzdGVyKFwiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnRpZlwiLCBiYW5kID0gNClcbnNsb3BlIDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDUpXG5hc3BlY3QgPC0gcmFzdGVyKFwiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnRpZlwiLCBiYW5kID0gNilcbm1vb3JsaW5lIDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDcpXG5cbiMgSW1wb3J0IFVLQ1AwOSBjbGltYXRlIGRhdGFcbiNsb2FkKGZpbGUgPSBcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC5yZGFcIilcbmdkZF8xOTYwXzkwX2FubiA8LSByYXN0ZXIoXCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmXCIsIGJhbmQgPSAxKVxuZ3NsXzE5NjBfOTBfYW5uIDwtIHJhc3RlcihcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWZcIiwgYmFuZCA9IDIpXG5yYWluXzE5NjBfOTBfYW5udWFsIDwtIHJhc3RlcihcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWZcIiwgYmFuZCA9IDMpXG5yYWluX2RhaWx5X21lYW5fMTk2MF85MF9hbm51YWwgPC0gcmFzdGVyKFwiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZlwiLCBiYW5kID0gNClcbnJhaW5kYXlzXzFtbV8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoXCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmXCIsIGJhbmQgPSA1KVxucmFpbmRheXNfMTBtbV8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoXCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmXCIsIGJhbmQgPSA2KVxudGVtcF9tZWFuXzE5NjBfOTBfYW5udWFsIDwtIHJhc3RlcihcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWZcIiwgYmFuZCA9IDcpXG50ZW1wX21pbl8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoXCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmXCIsIGJhbmQgPSA4KVxudGVtcF9tYXhfMTk2MF85MF9hbm51YWwgPC0gcmFzdGVyKFwiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZlwiLCBiYW5kID0gOSlcblxuYGBgIn0= -->
 <pre class="r"><code># Import environmental and topographic data
 #load(file = &quot;../data/topo_env_data.rda&quot;)
+
 elev &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 1)
 surf &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 2)
 inflow &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 3)
 outflow &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 4)
 slope &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 5)
 aspect &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 6)
-moorline &lt;- raster(../data/topo_env_data.rig, band = 7)</code></pre>
+moorline &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 7)
+
+# Import UKCP09 climate data
+#load(file = &quot;../data/ukcp09GriddedDataAnnPrepd.rda&quot;)
+gdd_1960_90_ann &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 1)
+gsl_1960_90_ann &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 2)
+rain_1960_90_annual &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 3)
+rain_daily_mean_1960_90_annual &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 4)
+raindays_1mm_1960_90_annual &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 5)
+raindays_10mm_1960_90_annual &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 6)
+temp_mean_1960_90_annual &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 7)
+temp_min_1960_90_annual &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 8)
+temp_max_1960_90_annual &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 9)
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gcmFzdGVyKC4uL2RhdGEvdG9wb19lbnZfZGF0YS5yaWcsIGJhbmQgPSA3KSA6IFxuICBvYmplY3QgJy4uJyBub3QgZm91bmRcbiJ9 -->
-<pre><code>Error in raster(../data/topo_env_data.rig, band = 7) : 
-  object '..' not found</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -280,19 +261,48 @@ moorline &lt;- raster(../data/topo_env_data.rig, band = 7)</code></pre>
 <h2>prepare observations</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3Jhc3Rlcjo6ZXh0cmFjdCBtZXRhZGF0YVxuYm91bmRib3ggPC0gb2JzZXJ2YXRpb25zU1BERkBiYm94OyBib3VuZGJveCBcbkNSUyA8LSBvYnNlcnZhdGlvbnNTUERGQHByb2o0c3RyaW5nXG5gYGAifQ== -->
+<pre class="r"><code>#raster::extract metadata
+boundbox &lt;- observationsSPDF@bbox; boundbox 
+CRS &lt;- observationsSPDF@proj4string</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2ZpbHRlciBvYnNlcnZhdGlvbnNcbm9ic2VydmF0aW9ucyA8LSBvYnNlcnZhdGlvbnNTUERGW3doaWNoKG9ic2VydmF0aW9uc1NQREZAZGF0YSRUaWVyID09IDEgfCBvYnNlcnZhdGlvbnNTUERGQGRhdGEkVGllciA9PSAyKSxdXG5zdW1tYXJ5KG9ic2VydmF0aW9ucyk7IGNsYXNzKG9ic2VydmF0aW9ucylcbnVuaXF1ZShvYnNlcnZhdGlvbnMkRGV0YWlsZWQpXG51bmlxdWUob2JzZXJ2YXRpb25zJEJyb2FkKVxuXG5ybShvYnNlcnZhdGlvbnNTUERGKVxuYGBgIn0= -->
+<pre class="r"><code>#filter observations
+observations &lt;- observationsSPDF[which(observationsSPDF@data$Tier == 1 | observationsSPDF@data$Tier == 2),]
+summary(observations); class(observations)
+unique(observations$Detailed)
+unique(observations$Broad)
+
+rm(observationsSPDF)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBtYWtlIGEgbG9naWNhbCB2ZWN0b3IgZm9yIGJsYW5rZXQgYm9nIHByZXNlbmNlXG5vYnNlcnZhdGlvbnMkYmJvZyA8LSBpZl9lbHNlKG9ic2VydmF0aW9ucyREZXRhaWxlZCA9PSBcIkJsYW5rZXQgQm9nXCIsIHRydWUgPSBcInByZXNlbnRcIiwgZmFsc2UgPSBcImFic2VudFwiKVxuYGBgIn0= -->
+<pre class="r"><code># make a logical vector for blanket bog presence
+observations$bbog &lt;- if_else(observations$Detailed == &quot;Blanket Bog&quot;, true = &quot;present&quot;, false = &quot;absent&quot;)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>reduce the number of absences to balance the dataset</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5kZXhTdWJzZXQgPC0gYyhcbiAgc2FtcGxlKHggPSB3aGljaChvYnNlcnZhdGlvbnMkYmJvZyAlaW4lIFwiYWJzZW50XCIpLCAjYSBzdWJzZXQgb2YgYWJzZW5jZXNcbiAgICAgICBzaXplID0gd2hpY2gob2JzZXJ2YXRpb25zJGJib2cgJWluJSBcInByZXNlbnRcIiksICNzYW1lIG51bWJlciBhcyBwcmVzZW5jZVxuICAgICAgIHJlcGxhY2UgPSBGQUxTRSksIFxuICB3aGljaChvYnNlcnZhdGlvbnMkYmJvZyAlaW4lIFwicHJlc2VudFwiKSAjaW5kZXggb2YgcHJlc2VuY2Vcbilcbmxlbmd0aChpbmRleFN1YnNldCk7IHN0cihpbmRleFN1YnNldClcblxub2JzZXJ2YXRpb25zIDwtIG9ic2VydmF0aW9uc1tpbmRleFN1YnNldCxdOyBkaW0ob2JzZXJ2YXRpb25zKSAjc3Vic2V0IHRoZSBvYnNlcnZhdGlvbnMgZGF0YXNldFxuYGBgIn0= -->
+<pre class="r"><code>indexSubset &lt;- c(
+  sample(x = which(observations$bbog %in% &quot;absent&quot;), #a subset of absences
+       size = which(observations$bbog %in% &quot;present&quot;), #same number as presence
+       replace = FALSE), 
+  which(observations$bbog %in% &quot;present&quot;) #index of presence
+)
+length(indexSubset); str(indexSubset)
+
+observations &lt;- observations[indexSubset,]; dim(observations) #subset the observations dataset</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -300,17 +310,64 @@ moorline &lt;- raster(../data/topo_env_data.rig, band = 7)</code></pre>
 <h2>Create input dataset</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2NyZWF0ZSBkYXRhZnJhbWUgd2l0aCBwZWF0IGRlcHRoIGFzIGZpcnN0IGNvbFxuaW5wdXQuZGF0YSA8LSBkYXRhLmZyYW1lKGJib2cgPSBvYnNlcnZhdGlvbnMkYmJvZylcblxuI3Jhc3Rlcjo6ZXh0cmFjdCBlbnZpcm9ubWVudGFsIGFuZCB0b3BvZ3JhcGhpYyBkYXRhIGZvciBlYWNoIHBlYXQgZGVwdGggbWVhc3VyZW1lbnRcbmlucHV0LmRhdGEkZWxldiA8LSByYXN0ZXI6OmV4dHJhY3QoXG4gIGVsZXYsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pXG5pbnB1dC5kYXRhJGFzcGVjdCA8LSByYXN0ZXI6OmV4dHJhY3QoXG4gIGFzcGVjdCwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSlcbmlucHV0LmRhdGEkc2xvcGUgPC0gcmFzdGVyOjpleHRyYWN0KFxuICBzbG9wZSwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSlcbmlucHV0LmRhdGEkb3V0ZmxvdyA8LSByYXN0ZXI6OmV4dHJhY3QoXG4gIG91dGZsb3csIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pXG5pbnB1dC5kYXRhJGluZmxvdyA8LSByYXN0ZXI6OmV4dHJhY3QoXG4gIGluZmxvdywgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSlcbmlucHV0LmRhdGEkc3VyZiA8LSByYXN0ZXI6OmV4dHJhY3QoXG4gIHN1cmYsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pXG5pbnB1dC5kYXRhJG1vb3JsaW5lIDwtIHJhc3Rlcjo6ZXh0cmFjdChcbiAgbW9vcmxpbmUsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pXG5cbiNyYXN0ZXI6OmV4dHJhY3QgY2xpbWF0ZSBkYXRhIGZvciBlYWNoIHBlYXQgZGVwdGggbWVhc3VyZW1lbnRcbmlucHV0LmRhdGEkZ2RkIDwtIHJhc3Rlcjo6ZXh0cmFjdChcbiAgZ2RkXzE5NjBfOTBfYW5uLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKVxuaW5wdXQuZGF0YSRnc2wgPC0gcmFzdGVyOjpleHRyYWN0KFxuICBnc2xfMTk2MF85MF9hbm4sIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pXG5pbnB1dC5kYXRhJHJhaW5fYW5uIDwtIHJhc3Rlcjo6ZXh0cmFjdChcbiAgcmFpbl8xOTYwXzkwX2FubnVhbCwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSlcbmlucHV0LmRhdGEkcmFpbl9kYWlseSA8LSByYXN0ZXI6OmV4dHJhY3QoXG4gIHJhaW5fZGFpbHlfbWVhbl8xOTYwXzkwX2FubnVhbCwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSlcbmlucHV0LmRhdGEkcmFpbmRheXNfMTBtbSA8LSByYXN0ZXI6OmV4dHJhY3QoXG4gIHJhaW5kYXlzXzEwbW1fMTk2MF85MF9hbm51YWwsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pXG5pbnB1dC5kYXRhJHJhaW5kYXlzXzFtbSA8LSByYXN0ZXI6OmV4dHJhY3QoXG4gIHJhaW5kYXlzXzFtbV8xOTYwXzkwX2FubnVhbCwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSlcbmlucHV0LmRhdGEkdGVtcF9tZWFuIDwtIHJhc3Rlcjo6ZXh0cmFjdChcbiAgdGVtcF9tZWFuXzE5NjBfOTBfYW5udWFsLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKVxuaW5wdXQuZGF0YSR0ZW1wX21pbiA8LSByYXN0ZXI6OmV4dHJhY3QoXG4gIHRlbXBfbWluXzE5NjBfOTBfYW5udWFsLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKVxuaW5wdXQuZGF0YSR0ZW1wX21heCA8LSByYXN0ZXI6OmV4dHJhY3QoXG4gIHRlbXBfbWF4XzE5NjBfOTBfYW5udWFsLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKVxuYGBgIn0= -->
+<pre class="r"><code>#create dataframe with peat depth as first col
+input.data &lt;- data.frame(bbog = observations$bbog)
+
+#raster::extract environmental and topographic data for each peat depth measurement
+input.data$elev &lt;- raster::extract(
+  elev, coordinates(observations)[,1:2])
+input.data$aspect &lt;- raster::extract(
+  aspect, coordinates(observations)[,1:2])
+input.data$slope &lt;- raster::extract(
+  slope, coordinates(observations)[,1:2])
+input.data$outflow &lt;- raster::extract(
+  outflow, coordinates(observations)[,1:2])
+input.data$inflow &lt;- raster::extract(
+  inflow, coordinates(observations)[,1:2])
+input.data$surf &lt;- raster::extract(
+  surf, coordinates(observations)[,1:2])
+input.data$moorline &lt;- raster::extract(
+  moorline, coordinates(observations)[,1:2])
+
+#raster::extract climate data for each peat depth measurement
+input.data$gdd &lt;- raster::extract(
+  gdd_1960_90_ann, coordinates(observations)[,1:2])
+input.data$gsl &lt;- raster::extract(
+  gsl_1960_90_ann, coordinates(observations)[,1:2])
+input.data$rain_ann &lt;- raster::extract(
+  rain_1960_90_annual, coordinates(observations)[,1:2])
+input.data$rain_daily &lt;- raster::extract(
+  rain_daily_mean_1960_90_annual, coordinates(observations)[,1:2])
+input.data$raindays_10mm &lt;- raster::extract(
+  raindays_10mm_1960_90_annual, coordinates(observations)[,1:2])
+input.data$raindays_1mm &lt;- raster::extract(
+  raindays_1mm_1960_90_annual, coordinates(observations)[,1:2])
+input.data$temp_mean &lt;- raster::extract(
+  temp_mean_1960_90_annual, coordinates(observations)[,1:2])
+input.data$temp_min &lt;- raster::extract(
+  temp_min_1960_90_annual, coordinates(observations)[,1:2])
+input.data$temp_max &lt;- raster::extract(
+  temp_max_1960_90_annual, coordinates(observations)[,1:2])</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="remove-errors-and-outliers-from-training-data" class="section level3">
 <h3>remove errors and outliers from training data</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShpbnB1dC5kYXRhKVxuYGBgIn0= -->
+<pre class="r"><code>summary(input.data)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>looking at the data frame and the summary above, there are a few errors. There are 600 records where the elevation is -1000, all of these are not blanket bog. Also there are 24 records where the climate data is NA (these coincide with the -1000 elevation.) We will remove the records where elevation is -1,000.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5wdXQuZGF0YSA8LSBmaWx0ZXIoaW5wdXQuZGF0YSwgZWxldiAhPSAtMTAwMClcbnN1bW1hcnkoaW5wdXQuZGF0YSlcbmBgYCJ9 -->
+<pre class="r"><code>input.data &lt;- filter(input.data, elev != -1000)
+summary(input.data)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -319,6 +376,10 @@ moorline &lt;- raster(../data/topo_env_data.rig, band = 7)</code></pre>
 <h2>export to file</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2F2ZShpbnB1dC5kYXRhLCBmaWxlPVwiLi4vZGF0YS9pbnB1dC5kYXRhLnJkc1wiKVxud3JpdGUuY3N2KGlucHV0LmRhdGEsIGZpbGUgPSBcIi4uL2RhdGEvaW5wdXRfZGF0YS5jc3ZcIiwgcm93Lm5hbWVzID0gRilcbmBgYCJ9 -->
+<pre class="r"><code>save(input.data, file=&quot;../data/input.data.rds&quot;)
+write.csv(input.data, file = &quot;../data/input_data.csv&quot;, row.names = F)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 </div>
 

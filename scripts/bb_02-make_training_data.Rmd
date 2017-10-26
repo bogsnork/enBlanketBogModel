@@ -35,11 +35,7 @@ inflow <- raster("../data/topo_env_data.tif", band = 3)
 outflow <- raster("../data/topo_env_data.tif", band = 4)
 slope <- raster("../data/topo_env_data.tif", band = 5)
 aspect <- raster("../data/topo_env_data.tif", band = 6)
-<<<<<<< HEAD
 moorline <- raster("../data/topo_env_data.tif", band = 7)
-=======
-moorline <- raster(../data/topo_env_data.rig, band = 7)
->>>>>>> 70dfc3ea1e62f81f5b9af53fb85650e4a070c43f
 
 # Import UKCP09 climate data
 #load(file = "../data/ukcp09GriddedDataAnnPrepd.rda")
