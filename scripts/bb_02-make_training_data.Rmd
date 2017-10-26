@@ -35,6 +35,7 @@ inflow <- raster("../data/topo_env_data.tif", band = 3)
 outflow <- raster("../data/topo_env_data.tif", band = 4)
 slope <- raster("../data/topo_env_data.tif", band = 5)
 aspect <- raster("../data/topo_env_data.tif", band = 6)
+moorline <- raster("../data/topo_env_data.tif", band = 7)
 
 # Import UKCP09 climate data
 #load(file = "../data/ukcp09GriddedDataAnnPrepd.rda")
@@ -99,12 +100,14 @@ input.data$aspect <- raster::extract(
   aspect, coordinates(observations)[,1:2])
 input.data$slope <- raster::extract(
   slope, coordinates(observations)[,1:2])
-# input.data$outflow <- raster::extract(
-#   outflow, coordinates(observations)[,1:2])
-# input.data$inflow <- raster::extract(
-#   inflow, coordinates(observations)[,1:2])
-# input.data$surf <- raster::extract(
-#   surf, coordinates(observations)[,1:2])
+input.data$outflow <- raster::extract(
+  outflow, coordinates(observations)[,1:2])
+input.data$inflow <- raster::extract(
+  inflow, coordinates(observations)[,1:2])
+input.data$surf <- raster::extract(
+  surf, coordinates(observations)[,1:2])
+input.data$moorline <- raster::extract(
+  moorline, coordinates(observations)[,1:2])
 
 #raster::extract climate data for each peat depth measurement
 input.data$gdd <- raster::extract(

@@ -1,6 +1,8 @@
 ---
-title: "England Blanket Bog Model: Data Preparation"
-output: html_notebook
+title: 'England Blanket Bog Model: Data Preparation'
+output:
+  html_document: default
+  html_notebook: default
 ---
 
 
@@ -32,12 +34,9 @@ inflow <- raster("../data/Inflow Pattern © CEH1.tif")
 
 #outflow pattern
 outflow <- raster("../data/Outflow Pattern © CEH1.tif")
-```
 
-```{r}
-waterSP <- readOGR(dsn = "../data/surface_water/OpenMap_Local_OS_SurfaceWater_Area.shp", verbose = TRUE)
-
-water <- rasterize(x = waterSP, y = elev, getCover = TRUE)
+#distance from moorland line
+moorline <- raster("../data/moorland_distance_all.tif")
 ```
 
 ### Calculate derrived data
@@ -54,8 +53,8 @@ aspect <- terrain(x = elev, opt = "aspect", unit = "degrees", neighbors = 8)
 ## Save environmental and topographic data to file
 ```{r}
 #save to raster stack then geotiff (might work better than .rda)
-topo_env_stack <- stack(elev, surf, inflow, outflow, slope, aspect)
-writeRaster(x = topo_env_stack, filename = "../data/topo_env_data.tif")
+topo_env_stack <- stack(elev, surf, inflow, outflow, slope, aspect, moorline)
+writeRaster(x = topo_env_stack, filename = "../data/topo_env_data.tif", overwrite = TRUE)
 
 #save(elev, surf, inflow, outflow, slope, aspect, file = "../data/topo_env_data.rda")
 ```
@@ -104,4 +103,4 @@ rm(climate_stack)
 ```
 
 
-That's it, now go to bb_make_training_data.Rmd
+That's it, now go to bb_02-make_training_data.Rmd
