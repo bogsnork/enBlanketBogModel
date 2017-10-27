@@ -55,43 +55,43 @@ table(testing$bbog)
 #### run model
 Need the latest version of caret from github to avoid known bug.
 ```{r}
-M.rf.6 <- train(bbog ~ .,
+M.rf.7 <- train(bbog ~ .,
                 data=training, 
                 method = "rf")
 
-save(M.rf.6, file = "../data/models/Mrf6.rds")
+save(M.rf.7, file = "../data/models/Mrf7.rds")
 
-M.rf.6
+M.rf.7
 ```
 
 
 
 ```{r}
-plot(varImp(object= M.rf.6), main= "RF - Variable Importance")
+plot(varImp(object= M.rf.7), main= "RF - Variable Importance")
 ```
 
 ### Predict from model
 
 ```{r}
 #Predictions
-predictions <- predict(object = M.rf.6, newdata = testing, type="raw")
-table(predictions)
+predictions <- caret::predict.train(object = M.rf.7, newdata = testing, type="prob", index = "present")
+#table(predictions)
 
-confusionMatrix(predictions, testing[,"bbog"])
+#confusionMatrix(predictions, testing[,"bbog"])
 ```
 
 ### run final model
 
 ```{r}
-M.rf.6.final <- train(bbog ~ .,
+M.rf.7.final <- train(bbog ~ .,
                 data = input.data,
                 method = "rf")
 
-save(M.rf.6.final, file = "../data/models/Mrf6final.rds")
+save(M.rf.7.final, file = "../data/models/Mrf7final.rds")
 
-M.rf.6.final
+M.rf.7.final
 
-M.rf.6.final$coefnames
+M.rf.7.final$coefnames
 ```
 
 
