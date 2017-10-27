@@ -73,11 +73,11 @@ rm(observationsSPDF)
 observations$bbog <- if_else(observations$Detailed == "Blanket Bog", true = "present", false = "absent")
 ```
 
-reduce the number of absences to balance the dataset
+reduce the number of absences to speed processing 
 ```{r}
 indexSubset <- c(
   sample(x = which(observations$bbog %in% "absent"), #a subset of absences
-       size = which(observations$bbog %in% "present"), #same number as presence
+       size = length(which(observations$bbog %in% "absent"))/5, #same number as presence
        replace = FALSE), 
   which(observations$bbog %in% "present") #index of presence
 )
