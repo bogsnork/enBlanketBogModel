@@ -13,6 +13,10 @@ A number of random forest models have been fitted for Cumbria, and one model has
 
 ###Model details: 
 
+####Main branch
+
+This is initially based on Cumbria
+
 M.rf.3.final
 Random Forest 
 
@@ -39,6 +43,20 @@ Coefficients:
 "raindays_10mm" "raindays_1mm"  "temp_mean"     "temp_min"      "temp_max"   
 
 See notebook/bb_run_models.3.nb.html for more info. 
+
+**need to update this up to model 7a**
+
+####Yorkshire Dales Pilot branch
+
+Following Model 7a, trying the approach out on a different area: Yorkshire Dales and Nidderdale.  Main lessons from Model 7a: 
+
+* general approach OK
+* output should be probability of blanket bog potential   
+*	moorland line operates very differently in some areas (e.g. it’s actually in the valleys in the Derbyshire Dales) and it reflects land management intervention, which we are (sort of by definition) trying to see beyond.  So needs a rethink.  
+*	How does it relate to the National Soils Map (the Cranfield one)  
+* age of the climate data I’ve been using (period 1960 to 1990): still makes sense to train the model on the historic data, because its more closely reflects the conditions the bog developed.  However for predicting potential we can use most recent climate data (early 2000s), and climate projections, see below. *	develop scenarios for blanket bog potential under different climate projections  
+
+
 
 ## Source Data
 
