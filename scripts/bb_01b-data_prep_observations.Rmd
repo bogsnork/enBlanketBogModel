@@ -1,0 +1,120 @@
+---
+title: 'England Blanket Bog Model: Data Preparation: Observations'
+output:
+  html_document: default
+  html_notebook: default
+---
+
+
+## Packages 
+```{r, include=FALSE}
+library(raster)
+library(rgdal)
+library(tidyverse)
+```
+
+
+## Import data ----
+```{r}
+list.files(path = "../data/FEP_points")
+
+FEP_data <- readxl::read_excel("../data/FEP_points/FEP_blanket_bog_all.xlsx", col_names = TRUE)
+```
+
+have a look: 
+```{r}
+dim(FEP_data)
+length(unique(FEP_data$PARCREF))
+
+FEP_data %>% 
+  filter(grepl("bog", Feature)) %>% 
+  select(Feature) %>% 
+  table()
+```
+
+## Prepare
+
+Convert parcel ref to grid ref
+```{r}
+FEP_data$grid_ref <-  paste0(substr(FEP_data$PARCREF, 1, 4), #grid letters and first two x coords 
+                     substr(FEP_data$PARCREF, 7, 8), #next two x coords 
+                     substr(FEP_data$PARCREF, 5, 6), #first two y coords
+                     substr(FEP_data$PARCREF, 9, 10))#next two y coords
+```
+
+
+
+Calculate fraction of parcel covered by habitat
+```{r}
+FEP_data$hab_cov <- FEP_data$`Feature Quantity` / FEP_data$RLR_AREA
+
+summary(FEP_data$hab_cov)
+```
+Should all be between 0 and 1.  Looks like there's some crazy data in there, but its mostly correct.  Check again when I've filtered out the blanket bog records.  
+
+## Filter
+
+Filter out all blanket bog records where bog greater than 80% cover of parcel
+
+```{r}
+#check extent
+FEP_bb <- FEP_data %>% 
+  filter(grepl("Blanket bog", Feature)) %>%
+  filter(hab_cov > 0.8) 
+
+summarise(FEP_bb, "Feature Count" = length(Feature), uniq_rows = nrow(unique(FEP_bb)), 
+          PARCREFS = length(unique(PARCREF)), 
+          min = min(hab_cov), med = median(hab_cov), max = max(hab_cov))
+
+hist(FEP_bb$hab_cov, breaks = c(seq(0, 1, 0.1), seq(2, max(FEP_bb$hab_cov), 50), max(FEP_bb$hab_cov)))
+boxplot(FEP_bb$hab_cov)
+plot(FEP_bb$hab_cov[which(FEP_bb$hab_cov>1)])
+length(FEP_bb$hab_cov[which(FEP_bb$hab_cov>1)])
+length(FEP_bb$hab_cov[which(FEP_bb$hab_cov>1.1)])
+```
+so it looks like 185 records show feature cover greater than parcel area, but of those, 145 are only 10% over, so probably a rounding error.  However, as this is a small number compared to the global figure of 3919 blanket bog records, we really don't need to worry too much about it and can just delete them.  
+
+
+```{r}
+length(FEP_bb$PARCREF) - length(unique(FEP_bb$PARCREF))
+```
+
+Also worth noting that there seem to be some duplicate parcel refs so we'll delete those too.   
+
+```{r}
+FEP_bb <- FEP_data %>% 
+  filter(grepl("Blanket bog", Feature)) %>%
+  filter(hab_cov > 0.9, hab_cov <=1) %>% 
+  select(-OPTCODE) %>% 
+  distinct()
+
+dim(FEP_bb)
+dim(FEP_data %>% 
+  filter(grepl("Blanket bog", Feature)) %>%
+  filter(hab_cov > 0.8))
+```
+ok, that's maybe deleted too many... hmmm
+
+```{r}
+nrow(FEP_data %>% 
+  filter(grepl("Blanket bog", Feature)) %>%
+  filter(`Feature Quantity` > 0.8) %>% 
+  distinct()
+)
+```
+
+try another approach: does it cover all of England.  Geocoding will take some time, but I can table the first two letters which correspond to grid letters: 
+
+```{r}
+FEP_grid_letters <- substr(FEP_data$PARCREF, 1, 2)
+table(FEP_grid_letters)
+
+FEP_bb <- FEP_data %>% 
+  filter(grepl("Blanket bog", Feature)) %>%
+  filter(hab_cov > 0.9, hab_cov <=1) %>% 
+  select(-OPTCODE) %>% 
+  distinct() 
+
+table(substr(FEP_bb$PARCREF, 1, 2))
+```
+

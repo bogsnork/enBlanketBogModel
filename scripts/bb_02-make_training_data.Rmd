@@ -77,7 +77,7 @@ reduce the number of absences to speed processing
 ```{r}
 indexSubset <- c(
   sample(x = which(observations$bbog %in% "absent"), #a subset of absences
-       size = length(which(observations$bbog %in% "absent"))/5, #same number as presence
+       size = length(which(observations$bbog %in% "absent"))/5, #reduce by a fifth
        replace = FALSE), 
   which(observations$bbog %in% "present") #index of presence
 )

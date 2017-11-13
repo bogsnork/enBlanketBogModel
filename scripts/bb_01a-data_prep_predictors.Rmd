@@ -1,5 +1,5 @@
 ---
-title: 'England Blanket Bog Model: Data Preparation'
+title: 'England Blanket Bog Model: Data Preparation: Predictors'
 output:
   html_document: default
   html_notebook: default
