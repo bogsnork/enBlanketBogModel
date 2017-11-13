@@ -1,8 +1,6 @@
 ---
 title: 'England Blanket Bog Model: Data Preparation: Observations'
-output:
-  html_document: default
-  html_notebook: default
+output: html_notebook
 ---
 
 
@@ -62,7 +60,8 @@ FEP_bb <- FEP_data %>%
   filter(grepl("Blanket bog", Feature)) %>%
   filter(hab_cov > 0.8) 
 
-summarise(FEP_bb, "Feature Count" = length(Feature), uniq_rows = nrow(unique(FEP_bb)), 
+summarise(FEP_bb %>% group_by(`Feature UOM`), 
+          "Feature Count" = length(Feature), uniq_rows = nrow(unique(FEP_bb)), 
           PARCREFS = length(unique(PARCREF)), 
           min = min(hab_cov), med = median(hab_cov), max = max(hab_cov))
 
@@ -85,6 +84,7 @@ Also worth noting that there seem to be some duplicate parcel refs so we'll dele
 FEP_bb <- FEP_data %>% 
   filter(grepl("Blanket bog", Feature)) %>%
   filter(hab_cov > 0.9, hab_cov <=1) %>% 
+  filter(`Feature UOM` == "ha") %>% 
   select(-OPTCODE) %>% 
   distinct()
 
@@ -118,3 +118,30 @@ FEP_bb <- FEP_data %>%
 table(substr(FEP_bb$PARCREF, 1, 2))
 ```
 
+yes, it does cover all of England.  
+
+# Export
+
+```{r}
+write.csv(x = FEP_bb, file = "../data/FEP_bb.csv", row.names = FALSE)
+```
+
+# further processing in ArcGIS
+
+* Open csv file in ArcGIS as a layer
+* right click and export to dbf
+* In ArcCatalog: "\\LPHPW0-MPD01\Mapdata\Geo-Data\Tools_Templates\Tools\Scripts\ArcGIS\ArcGridRefTool (ArcGIS 10)\GridRef tools.tbx"
+* open GridRefToShape: 
+    * select dbf file
+    * save as FEP_bb.shp
+    * select output type: centroids
+* spatial join with RLR layer
+    * Target features: LIDM_PARCELS_CURRENT
+    * Join features: FEP_bb.shp
+    * Join operation: JOIN_ONE_TO_ONE
+    * Keep all Target Features: false [if set to true will be a huuuge file]
+    * match option: INTERSECT
+    * output feature class: FEP_bb_RLRparcels.shp
+* Create additional presences
+    * Create Random Points tool
+    * 
