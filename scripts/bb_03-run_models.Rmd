@@ -57,7 +57,6 @@ training8a <- training[!(names(training) %in% c("surf", "rain_daily", "raindays_
 M.rf.8a <- train(bbog ~ .,
                 data= training8a, 
                 method = "rf")
-
 save(M.rf.8a, file = "../data/models/Mrf8a.rds")
 
 #run without moorland line
@@ -66,11 +65,26 @@ training8b <- training[!(names(training) %in% c("moorline", "surf", "rain_daily"
 M.rf.8b <- train(bbog ~ .,
                 data= training8b, 
                 method = "rf")
-
 save(M.rf.8b, file = "../data/models/Mrf8b.rds")
 
+#run with moorland line and include rainfall varialbes
+training8c <- training[!(names(training) %in% c("surf"))]
+M.rf.8c <- train(bbog ~ .,
+                data= training8c, 
+                method = "rf")
+save(M.rf.8c, file = "../data/models/Mrf8c.rds")
 
-M.rf.8b; M.rf.8b
+#run without moorland line and include rainfall varialbes
+training8d <- training[!(names(training) %in% c("moorline", "surf"))] 
+
+M.rf.8d <- train(bbog ~ .,
+                data= training8d, 
+                method = "rf")
+save(M.rf.8d, file = "../data/models/Mrf8d.rds")
+
+
+
+M.rf.8b; M.rf.8b; M.rf.8c; M.rf.8d
 ```
 
 
@@ -78,6 +92,8 @@ M.rf.8b; M.rf.8b
 ```{r}
 plot(varImp(object= M.rf.8a), main= "RF - Variable Importance")
 plot(varImp(object= M.rf.8b), main= "RF - Variable Importance")
+plot(varImp(object= M.rf.8c), main= "RF - Variable Importance")
+plot(varImp(object= M.rf.8d), main= "RF - Variable Importance")
 ```
 
 ### Predict from model
@@ -85,23 +101,40 @@ plot(varImp(object= M.rf.8b), main= "RF - Variable Importance")
 ```{r}
 #Predictions
 predictions8a <- caret::predict.train(object = M.rf.8a, newdata = testing, type="prob", index = "present")
-predictions8b <- caret::predict.train(object = M.rf.8a, newdata = testing, type="prob", index = "present")
+predictions8b <- caret::predict.train(object = M.rf.8b, newdata = testing, type="prob", index = "present")
+predictions8c <- caret::predict.train(object = M.rf.8c, newdata = testing, type="prob", index = "present")
+predictions8d <- caret::predict.train(object = M.rf.8d, newdata = testing, type="prob", index = "present")
 ```
 
-### run final model
+
+### run final models
 
 ```{r}
-input.data8b <- input.data[!(names(input.data) %in% c("moorline", "surf", "rain_daily", "raindays_1mm"))] 
-
-M.rf.8b.final <- train(bbog ~ .,
-                data = input.data8b,
+input.data.8a <- input.data[names(input.data) %in% names(training8a)] 
+M.rf.8a.final <- train(bbog ~ .,
+                data = input.data.8a,
                 method = "rf")
+save(M.rf.8a.final, file = "../data/models/Mrf8afinal.rds")
 
+input.data.8b <- input.data[names(input.data) %in% names(training8b)] 
+M.rf.8b.final <- train(bbog ~ .,
+                data = input.data.8b,
+                method = "rf")
 save(M.rf.8b.final, file = "../data/models/Mrf8bfinal.rds")
 
-M.rf.8b.final
+input.data.8c <- input.data[names(input.data) %in% names(training8c)] 
+M.rf.8c.final <- train(bbog ~ .,
+                data = input.data.8c,
+                method = "rf")
+save(M.rf.8c.final, file = "../data/models/Mrf8cfinal.rds")
 
-M.rf.8b.final$coefnames
+input.data.8d <- input.data[names(input.data) %in% names(training8d)] 
+M.rf.8d.final <- train(bbog ~ .,
+                data = input.data.8d,
+                method = "rf")
+save(M.rf.8d.final, file = "../data/models/Mrf8dfinal.rds")
+
+M.rf.8a.final; M.rf.8b.final; M.rf.8c.final; M.rf.8d.final
 ```
 
 
