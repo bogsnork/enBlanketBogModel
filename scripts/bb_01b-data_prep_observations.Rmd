@@ -197,3 +197,14 @@ observations_SPDF <- rbind(FEP_bb_random_pts_SPDF, not_bb_random_pts_SPDF)
 plot(observations_SPDF)
 ```
 
+```{r}
+table(observations_SPDF$bbog)
+```
+
+## export
+
+```{r}
+writeOGR(obj = observations_SPDF, dsn = "../data/observations.shp", driver = "ESRI Shapefile", 
+         layer = "observations_SPDF")
+```
+
