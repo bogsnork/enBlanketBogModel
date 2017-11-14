@@ -205,49 +205,15 @@ when():       purrr, foreach</code></pre>
 <h3>Import observations: land classification file</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub2dySW5mbyhjbGFzc2VzKVxuXG5gYGAifQ== -->
-<pre class="r"><code>ogrInfo(classes)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVzdCA8LSByZWFkT0dSKGRzbiA9IFwiLi4vZGF0YS9vYnNlcnZhdGlvbnMuc2hwXCIsIHZlcmJvc2UgPSBUUlVFKVxuXG5gYGAifQ== -->
+<pre class="r"><code>test &lt;- readOGR(dsn = &quot;../data/observations.shp&quot;, verbose = TRUE)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiU291cmNlOiBcIi4uL2RhdGEvRkVQX3BvaW50cy9DYXRjaG1lbnRfRkVQX09TX1RyYWluaW5nUG9pbnRzX2ZpbmFsX2NsZWFuLnNocFwiLCBsYXllcjogXCJDYXRjaG1lbnRfRkVQX09TX1RyYWluaW5nUG9pbnRzX2ZpbmFsX2NsZWFuXCJcbkRyaXZlcjogRVNSSSBTaGFwZWZpbGU7IG51bWJlciBvZiByb3dzOiA2MDg5IFxuRmVhdHVyZSB0eXBlOiB3a2JQb2ludCB3aXRoIDIgZGltZW5zaW9uc1xuRXh0ZW50OiAoMjkzMDI0LjcgNDYwNjg2LjUpIC0gKDM5MDM4Ny41IDU4NTYzMy41KVxuQ1JTOiArcHJvaj10bWVyYyArbGF0XzA9NDkgK2xvbl8wPS0yICtrPTAuOTk5NjAxMjcxNyAreF8wPTQwMDAwMCAreV8wPS0xMDAwMDAgK2RhdHVtPU9TR0IzNiArdW5pdHM9bSArbm9fZGVmcyAgXG5MRElEOiAwIFxuTnVtYmVyIG9mIGZpZWxkczogNCBcbiAgICAgIG5hbWUgdHlwZSBsZW5ndGggdHlwZU5hbWVcbjEgT0JKRUNUSUQgICAgNCAgICAyNTQgICBTdHJpbmdcbjIgRGV0YWlsZWQgICAgNCAgICAyNTQgICBTdHJpbmdcbjMgICAgQnJvYWQgICAgNCAgICAyNTQgICBTdHJpbmdcbjQgICAgIFRpZXIgICAgMCAgICAgIDkgIEludGVnZXJcbiJ9 -->
-<pre><code>Source: &quot;../data/FEP_points/Catchment_FEP_OS_TrainingPoints_final_clean.shp&quot;, layer: &quot;Catchment_FEP_OS_TrainingPoints_final_clean&quot;
-Driver: ESRI Shapefile; number of rows: 6089 
-Feature type: wkbPoint with 2 dimensions
-Extent: (293024.7 460686.5) - (390387.5 585633.5)
-CRS: +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +datum=OSGB36 +units=m +no_defs  
-LDID: 0 
-Number of fields: 4 
-      name type length typeName
-1 OBJECTID    4    254   String
-2 Detailed    4    254   String
-3    Broad    4    254   String
-4     Tier    0      9  Integer</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub2dySW5mbyhjbGFzc2VzKVxuYGBgIn0= -->
-<pre class="r"><code>ogrInfo(classes)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiU291cmNlOiBcIi4uL2RhdGEvRkVQX3BvaW50cy9DYXRjaG1lbnRfRkVQX09TX1RyYWluaW5nUG9pbnRzX2ZpbmFsX2NsZWFuLnNocFwiLCBsYXllcjogXCJDYXRjaG1lbnRfRkVQX09TX1RyYWluaW5nUG9pbnRzX2ZpbmFsX2NsZWFuXCJcbkRyaXZlcjogRVNSSSBTaGFwZWZpbGU7IG51bWJlciBvZiByb3dzOiA2MDg5IFxuRmVhdHVyZSB0eXBlOiB3a2JQb2ludCB3aXRoIDIgZGltZW5zaW9uc1xuRXh0ZW50OiAoMjkzMDI0LjcgNDYwNjg2LjUpIC0gKDM5MDM4Ny41IDU4NTYzMy41KVxuQ1JTOiArcHJvaj10bWVyYyArbGF0XzA9NDkgK2xvbl8wPS0yICtrPTAuOTk5NjAxMjcxNyAreF8wPTQwMDAwMCAreV8wPS0xMDAwMDAgK2RhdHVtPU9TR0IzNiArdW5pdHM9bSArbm9fZGVmcyAgXG5MRElEOiAwIFxuTnVtYmVyIG9mIGZpZWxkczogNCBcbiAgICAgIG5hbWUgdHlwZSBsZW5ndGggdHlwZU5hbWVcbjEgT0JKRUNUSUQgICAgNCAgICAyNTQgICBTdHJpbmdcbjIgRGV0YWlsZWQgICAgNCAgICAyNTQgICBTdHJpbmdcbjMgICAgQnJvYWQgICAgNCAgICAyNTQgICBTdHJpbmdcbjQgICAgIFRpZXIgICAgMCAgICAgIDkgIEludGVnZXJcbiJ9 -->
-<pre><code>Source: &quot;../data/FEP_points/Catchment_FEP_OS_TrainingPoints_final_clean.shp&quot;, layer: &quot;Catchment_FEP_OS_TrainingPoints_final_clean&quot;
-Driver: ESRI Shapefile; number of rows: 6089 
-Feature type: wkbPoint with 2 dimensions
-Extent: (293024.7 460686.5) - (390387.5 585633.5)
-CRS: +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +datum=OSGB36 +units=m +no_defs  
-LDID: 0 
-Number of fields: 4 
-      name type length typeName
-1 OBJECTID    4    254   String
-2 Detailed    4    254   String
-3    Broad    4    254   String
-4     Tier    0      9  Integer</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub2JzZXJ2YXRpb25zU1BERiA8LSByZWFkT0dSKGRzbiA9IGNsYXNzZXMsIHZlcmJvc2UgPSBUUlVFKVxuYGBgIn0= -->
-<pre class="r"><code>observationsSPDF &lt;- readOGR(dsn = classes, verbose = TRUE)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiT0dSIGRhdGEgc291cmNlIHdpdGggZHJpdmVyOiBFU1JJIFNoYXBlZmlsZSBcblNvdXJjZTogXCIuLi9kYXRhL0ZFUF9wb2ludHMvQ2F0Y2htZW50X0ZFUF9PU19UcmFpbmluZ1BvaW50c19maW5hbF9jbGVhbi5zaHBcIiwgbGF5ZXI6IFwiQ2F0Y2htZW50X0ZFUF9PU19UcmFpbmluZ1BvaW50c19maW5hbF9jbGVhblwiXG53aXRoIDYwODkgZmVhdHVyZXNcbkl0IGhhcyA0IGZpZWxkc1xuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoiT0dSIGRhdGEgc291cmNlIHdpdGggZHJpdmVyOiBFU1JJIFNoYXBlZmlsZSBcblNvdXJjZTogXCIuLi9kYXRhL29ic2VydmF0aW9ucy5zaHBcIiwgbGF5ZXI6IFwib2JzZXJ2YXRpb25zXCJcbndpdGggMzM1IGZlYXR1cmVzXG5JdCBoYXMgMiBmaWVsZHNcbiJ9 -->
 <pre><code>OGR data source with driver: ESRI Shapefile 
-Source: &quot;../data/FEP_points/Catchment_FEP_OS_TrainingPoints_final_clean.shp&quot;, layer: &quot;Catchment_FEP_OS_TrainingPoints_final_clean&quot;
-with 6089 features
-It has 4 fields</code></pre>
+Source: &quot;../data/observations.shp&quot;, layer: &quot;observations&quot;
+with 335 features
+It has 2 fields</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -256,9 +222,9 @@ It has 4 fields</code></pre>
 <h3>Import predictor data</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJbXBvcnQgZW52aXJvbm1lbnRhbCBhbmQgdG9wb2dyYXBoaWMgZGF0YVxuI2xvYWQoZmlsZSA9IFwiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnJkYVwiKVxuZWxldiA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSAxKVxuc3VyZiA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSAyKVxuaW5mbG93IDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDMpXG5vdXRmbG93IDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDQpXG5zbG9wZSA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSA1KVxuYXNwZWN0IDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDYpXG5tb29ybGluZSA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSA3KVxuIyBJbXBvcnQgVUtDUDA5IGNsaW1hdGUgZGF0YVxuI2xvYWQoZmlsZSA9IFwiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnJkYVwiKVxuZ2RkXzE5NjBfOTBfYW5uIDwtIHJhc3RlcihcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWZcIiwgYmFuZCA9IDEpXG5nc2xfMTk2MF85MF9hbm4gPC0gcmFzdGVyKFwiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZlwiLCBiYW5kID0gMilcbnJhaW5fMTk2MF85MF9hbm51YWwgPC0gcmFzdGVyKFwiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZlwiLCBiYW5kID0gMylcbnJhaW5fZGFpbHlfbWVhbl8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoXCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmXCIsIGJhbmQgPSA0KVxucmFpbmRheXNfMW1tXzE5NjBfOTBfYW5udWFsIDwtIHJhc3RlcihcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWZcIiwgYmFuZCA9IDUpXG5yYWluZGF5c18xMG1tXzE5NjBfOTBfYW5udWFsIDwtIHJhc3RlcihcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWZcIiwgYmFuZCA9IDYpXG50ZW1wX21lYW5fMTk2MF85MF9hbm51YWwgPC0gcmFzdGVyKFwiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZlwiLCBiYW5kID0gNylcbnRlbXBfbWluXzE5NjBfOTBfYW5udWFsIDwtIHJhc3RlcihcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWZcIiwgYmFuZCA9IDgpXG50ZW1wX21heF8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoXCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmXCIsIGJhbmQgPSA5KVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJbXBvcnQgZW52aXJvbm1lbnRhbCBhbmQgdG9wb2dyYXBoaWMgZGF0YVxuI2xvYWQoZmlsZSA9IFwiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnJkYVwiKSAjcnVuIHRoaXMgdG8gc2tpcCBzdGVwcyBiZWxvd1xuZWxldiA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSAxKVxuc3VyZiA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSAyKVxuaW5mbG93IDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDMpXG5vdXRmbG93IDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDQpXG5zbG9wZSA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSA1KVxuYXNwZWN0IDwtIHJhc3RlcihcIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWZcIiwgYmFuZCA9IDYpXG5tb29ybGluZSA8LSByYXN0ZXIoXCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmXCIsIGJhbmQgPSA3KVxuIyBJbXBvcnQgVUtDUDA5IGNsaW1hdGUgZGF0YVxuI2xvYWQoZmlsZSA9IFwiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnJkYVwiKSAjIHJ1biB0aGlzIHRvIHNraXAgc3RlcHMgYmVsb3dcbmdkZF8xOTYwXzkwX2FubiA8LSByYXN0ZXIoXCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmXCIsIGJhbmQgPSAxKVxuZ3NsXzE5NjBfOTBfYW5uIDwtIHJhc3RlcihcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWZcIiwgYmFuZCA9IDIpXG5yYWluXzE5NjBfOTBfYW5udWFsIDwtIHJhc3RlcihcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWZcIiwgYmFuZCA9IDMpXG5yYWluX2RhaWx5X21lYW5fMTk2MF85MF9hbm51YWwgPC0gcmFzdGVyKFwiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZlwiLCBiYW5kID0gNClcbnJhaW5kYXlzXzFtbV8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoXCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmXCIsIGJhbmQgPSA1KVxucmFpbmRheXNfMTBtbV8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoXCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmXCIsIGJhbmQgPSA2KVxudGVtcF9tZWFuXzE5NjBfOTBfYW5udWFsIDwtIHJhc3RlcihcIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWZcIiwgYmFuZCA9IDcpXG50ZW1wX21pbl8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoXCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmXCIsIGJhbmQgPSA4KVxudGVtcF9tYXhfMTk2MF85MF9hbm51YWwgPC0gcmFzdGVyKFwiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZlwiLCBiYW5kID0gOSlcbmBgYCJ9 -->
 <pre class="r"><code># Import environmental and topographic data
-#load(file = &quot;../data/topo_env_data.rda&quot;)
+#load(file = &quot;../data/topo_env_data.rda&quot;) #run this to skip steps below
 elev &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 1)
 surf &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 2)
 inflow &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 3)
@@ -267,7 +233,7 @@ slope &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 5)
 aspect &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 6)
 moorline &lt;- raster(&quot;../data/topo_env_data.tif&quot;, band = 7)
 # Import UKCP09 climate data
-#load(file = &quot;../data/ukcp09GriddedDataAnnPrepd.rda&quot;)
+#load(file = &quot;../data/ukcp09GriddedDataAnnPrepd.rda&quot;) # run this to skip steps below
 gdd_1960_90_ann &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 1)
 gsl_1960_90_ann &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 2)
 rain_1960_90_annual &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif&quot;, band = 3)
@@ -286,126 +252,49 @@ temp_max_1960_90_annual &lt;- raster(&quot;../data/ukcp09GriddedDataAnnPrepd.tif
 <h2>prepare observations</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3Jhc3Rlcjo6ZXh0cmFjdCBtZXRhZGF0YVxuYm91bmRib3ggPC0gb2JzZXJ2YXRpb25zU1BERkBiYm94OyBib3VuZGJveCBcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3Jhc3Rlcjo6ZXh0cmFjdCBtZXRhZGF0YVxuYm91bmRib3ggPC0gb2JzZXJ2YXRpb25zX1NQREZAYmJveDsgYm91bmRib3ggXG5gYGAifQ== -->
 <pre class="r"><code>#raster::extract metadata
-boundbox &lt;- observationsSPDF@bbox; boundbox </code></pre>
+boundbox &lt;- observations_SPDF@bbox; boundbox </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgbWluICAgICAgbWF4XG5jb29yZHMueDEgMjkzMDI0LjcgMzkwMzg3LjVcbmNvb3Jkcy54MiA0NjA2ODYuNSA1ODU2MzMuNVxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgbWluICAgICAgbWF4XG5jb29yZHMueDEgMzYyODAzLjcgNDIxOTc3LjhcbmNvb3Jkcy54MiA0NDk1NDguNyA1MDcyNTMuMFxuIn0= -->
 <pre><code>               min      max
-coords.x1 293024.7 390387.5
-coords.x2 460686.5 585633.5</code></pre>
+coords.x1 362803.7 421977.8
+coords.x2 449548.7 507253.0</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuQ1JTIDwtIG9ic2VydmF0aW9uc1NQREZAcHJvajRzdHJpbmdcbmBgYCJ9 -->
-<pre class="r"><code>CRS &lt;- observationsSPDF@proj4string</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuQ1JTIDwtIG9ic2VydmF0aW9uc19TUERGQHByb2o0c3RyaW5nXG5gYGAifQ== -->
+<pre class="r"><code>CRS &lt;- observations_SPDF@proj4string</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2ZpbHRlciBvYnNlcnZhdGlvbnNcbm9ic2VydmF0aW9ucyA8LSBvYnNlcnZhdGlvbnNTUERGW3doaWNoKG9ic2VydmF0aW9uc1NQREZAZGF0YSRUaWVyID09IDEgfCBvYnNlcnZhdGlvbnNTUERGQGRhdGEkVGllciA9PSAyKSxdXG5zdW1tYXJ5KG9ic2VydmF0aW9ucyk7IGNsYXNzKG9ic2VydmF0aW9ucylcbmBgYCJ9 -->
-<pre class="r"><code>#filter observations
-observations &lt;- observationsSPDF[which(observationsSPDF@data$Tier == 1 | observationsSPDF@data$Tier == 2),]
-summary(observations); class(observations)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShvYnNlcnZhdGlvbnMpOyBjbGFzcyhvYnNlcnZhdGlvbnMpXG5cbmBgYCJ9 -->
+<pre class="r"><code>summary(observations); class(observations)
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiT2JqZWN0IG9mIGNsYXNzIFNwYXRpYWxQb2ludHNEYXRhRnJhbWVcbkNvb3JkaW5hdGVzOlxuICAgICAgICAgICAgICAgbWluICAgICAgbWF4XG5jb29yZHMueDEgMjkzMDI0LjcgMzkwMzg3LjVcbmNvb3Jkcy54MiA0NjA2ODYuNSA1ODU2MzMuNVxuSXMgcHJvamVjdGVkOiBUUlVFIFxucHJvajRzdHJpbmcgOlxuWytwcm9qPXRtZXJjICtsYXRfMD00OSArbG9uXzA9LTIgK2s9MC45OTk2MDEyNzE3ICt4XzA9NDAwMDAwICt5XzA9LTEwMDAwMCArZGF0dW09T1NHQjM2XG4rdW5pdHM9bSArbm9fZGVmcyArZWxscHM9YWlyeVxuK3Rvd2dzODQ9NDQ2LjQ0OCwtMTI1LjE1Nyw1NDIuMDYwLDAuMTUwMiwwLjI0NzAsMC44NDIxLC0yMC40ODk0XVxuTnVtYmVyIG9mIHBvaW50czogNTgzMVxuRGF0YSBhdHRyaWJ1dGVzOlxuICAgIE9CSkVDVElEICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIERldGFpbGVkICAgICAgICAgICAgICAgICAgICAgICAgICAgICBCcm9hZCAgICAgXG4gMTc1NCAgIDogICA0ICAgQ29hc3RhbCBTYWx0bWFyc2ggICAgICAgICAgICAgIDogODM2ICAgSGVhdGhsYW5kIGFuZCBNb29ybGFuZCAgICAgIDoxNjc2ICBcbiAxNzYwICAgOiAgIDQgICBVcGxhbmQgRmx1c2hlcywgRmVucyBhbmQgU3dhbXBzOiA0OTQgICBTcGVjaWVzIFJpY2ggR3Jhc3NsYW5kICAgICAgOjEzNzQgIFxuIDE3NjEgICA6ICAgNCAgIEJsYW5rZXQgQm9nICAgICAgICAgICAgICAgICAgICA6IDQ4OCAgIENvYXN0YWwgICAgICAgICAgICAgICAgICAgICA6IDg2OCAgXG4gMjMxICAgIDogICA0ICAgVXBsYW5kIEhlYXRobGFuZCAgICAgICAgICAgICAgIDogNDE0ICAgV2V0bGFuZCAgICAgICAgICAgICAgICAgICAgIDogNDY2ICBcbiAyMzIgICAgOiAgIDQgICBMb3dsYW5kIEZlbnMgICAgICAgICAgICAgICAgICAgOiAzNjYgICBTY3J1YiBhbmQgQnJhY2tlbiAgICAgICAgICAgOiAzMTggIFxuIDIzMyAgICA6ICAgNCAgIExvd2xhbmQgTWVhZG93cyAgICAgICAgICAgICAgICA6IDI5NiAgIERlY2lkdW91cyBhbmQgTWl4ZWQgV29vZGxhbmQ6IDI3NCAgXG4gKE90aGVyKTo1ODA3ICAgKE90aGVyKSAgICAgICAgICAgICAgICAgICAgICAgIDoyOTM3ICAgKE90aGVyKSAgICAgICAgICAgICAgICAgICAgIDogODU1ICBcbiAgICAgIFRpZXIgICAgICBcbiBNaW4uICAgOjEuMDAwICBcbiAxc3QgUXUuOjEuMDAwICBcbiBNZWRpYW4gOjEuMDAwICBcbiBNZWFuICAgOjEuNDkyICBcbiAzcmQgUXUuOjIuMDAwICBcbiBNYXguICAgOjIuMDAwICBcbiAgICAgICAgICAgICAgICBcblsxXSBcIlNwYXRpYWxQb2ludHNEYXRhRnJhbWVcIlxuYXR0cigsXCJwYWNrYWdlXCIpXG5bMV0gXCJzcFwiXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiT2JqZWN0IG9mIGNsYXNzIFNwYXRpYWxQb2ludHNEYXRhRnJhbWVcbkNvb3JkaW5hdGVzOlxuICAgICAgICAgICAgICAgbWluICAgICAgbWF4XG5jb29yZHMueDEgMzYyODAzLjcgNDIxOTc3LjhcbmNvb3Jkcy54MiA0NDk1NDguNyA1MDcyNTMuMFxuSXMgcHJvamVjdGVkOiBUUlVFIFxucHJvajRzdHJpbmcgOlxuWytwcm9qPXRtZXJjICtsYXRfMD00OSArbG9uXzA9LTIgK2s9MC45OTk2MDEyNzE3ICt4XzA9NDAwMDAwICt5XzA9LTEwMDAwMCArZGF0dW09T1NHQjM2XG4rdW5pdHM9bSArbm9fZGVmcyArZWxscHM9YWlyeVxuK3Rvd2dzODQ9NDQ2LjQ0OCwtMTI1LjE1Nyw1NDIuMDYwLDAuMTUwMiwwLjI0NzAsMC44NDIxLC0yMC40ODk0XVxuTnVtYmVyIG9mIHBvaW50czogMzM1XG5EYXRhIGF0dHJpYnV0ZXM6XG4gICAgICBDSUQgICAgICAgICAgICBiYm9nICAgICAgICAgIFxuIE1pbi4gICA6IDAuMDAgICBMZW5ndGg6MzM1ICAgICAgICBcbiAxc3QgUXUuOiAwLjAwICAgQ2xhc3MgOmNoYXJhY3RlciAgXG4gTWVkaWFuIDogMC4wMCAgIE1vZGUgIDpjaGFyYWN0ZXIgIFxuIE1lYW4gICA6MTUuMzcgICAgICAgICAgICAgICAgICAgICBcbiAzcmQgUXUuOjI3LjAwICAgICAgICAgICAgICAgICAgICAgXG4gTWF4LiAgIDo3OS4wMCAgICAgICAgICAgICAgICAgICAgIFxuWzFdIFwiU3BhdGlhbFBvaW50c0RhdGFGcmFtZVwiXG5hdHRyKCxcInBhY2thZ2VcIilcblsxXSBcInNwXCJcbiJ9 -->
 <pre><code>Object of class SpatialPointsDataFrame
 Coordinates:
                min      max
-coords.x1 293024.7 390387.5
-coords.x2 460686.5 585633.5
+coords.x1 362803.7 421977.8
+coords.x2 449548.7 507253.0
 Is projected: TRUE 
 proj4string :
 [+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +datum=OSGB36
 +units=m +no_defs +ellps=airy
 +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894]
-Number of points: 5831
+Number of points: 335
 Data attributes:
-    OBJECTID                               Detailed                             Broad     
- 1754   :   4   Coastal Saltmarsh              : 836   Heathland and Moorland      :1676  
- 1760   :   4   Upland Flushes, Fens and Swamps: 494   Species Rich Grassland      :1374  
- 1761   :   4   Blanket Bog                    : 488   Coastal                     : 868  
- 231    :   4   Upland Heathland               : 414   Wetland                     : 466  
- 232    :   4   Lowland Fens                   : 366   Scrub and Bracken           : 318  
- 233    :   4   Lowland Meadows                : 296   Deciduous and Mixed Woodland: 274  
- (Other):5807   (Other)                        :2937   (Other)                     : 855  
-      Tier      
- Min.   :1.000  
- 1st Qu.:1.000  
- Median :1.000  
- Mean   :1.492  
- 3rd Qu.:2.000  
- Max.   :2.000  
-                
+      CID            bbog          
+ Min.   : 0.00   Length:335        
+ 1st Qu.: 0.00   Class :character  
+ Median : 0.00   Mode  :character  
+ Mean   :15.37                     
+ 3rd Qu.:27.00                     
+ Max.   :79.00                     
 [1] &quot;SpatialPointsDataFrame&quot;
 attr(,&quot;package&quot;)
 [1] &quot;sp&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudW5pcXVlKG9ic2VydmF0aW9ucyREZXRhaWxlZClcbmBgYCJ9 -->
-<pre class="r"><code>unique(observations$Detailed)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBDb2FzdGFsIGFuZCBGbG9vZHBsYWluIEdyYXppbmcgTWFyc2ggU2NydWIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gWzNdIExvd2xhbmQgRmVucyAgICAgICAgICAgICAgICAgICAgICAgICBNdWQsIFNhbmQgb3IgU2hpbmdsZSAgICAgICAgICAgICAgICBcbiBbNV0gU2VhICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFN1cmZhY2UgV2F0ZXIgICAgICAgICAgICAgICAgICAgICAgIFxuIFs3XSBVcmJhbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTG93bGFuZCBEcnkgQWNpZCBHcmFzc2xhbmQgICAgICAgICAgXG4gWzldIEltcHJvdmVkIEdyYXNzbGFuZCAgICAgICAgICAgICAgICAgICBQdXJwbGUgTW9vciBHcmFzcyBhbmQgUnVzaCBQYXN0dXJlcyBcblsxMV0gTG93bGFuZCBIZWF0aGxhbmQgICAgICAgICAgICAgICAgICAgIEJyb2FkbGVhdmVkLCBNaXhlZCBhbmQgWWV3IFdvb2RsYW5kIFxuWzEzXSBUcmFkaXRpb25hbCBPcmNoYXJkcyAgICAgICAgICAgICAgICAgTG93bGFuZCBNZWFkb3dzICAgICAgICAgICAgICAgICAgICAgXG5bMTVdIEFjaWQgR3Jhc3NsYW5kICAgICAgICAgICAgICAgICAgICAgICBDb2FzdGFsIFNhbmQgRHVuZXMgICAgICAgICAgICAgICAgICBcblsxN10gU2VtaS1pbXByb3ZlZCBHcmFzc2xhbmQgICAgICAgICAgICAgIExvd2xhbmQgUmFpc2VkIEJvZyAgICAgICAgICAgICAgICAgIFxuWzE5XSBVcGxhbmQgQ2FsY2FyZW91cyBHcmFzc2xhbmQgICAgICAgICAgVXBsYW5kIEhheSBNZWFkb3dzICAgICAgICAgICAgICAgICAgXG5bMjFdIFVwbGFuZCBGbHVzaGVzLCBGZW5zIGFuZCBTd2FtcHMgICAgICBVcGxhbmQgSGVhdGhsYW5kICAgICAgICAgICAgICAgICAgICBcblsyM10gQ29hc3RhbCBTYWx0bWFyc2ggICAgICAgICAgICAgICAgICAgIEJsYW5rZXQgQm9nICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzI1XSBXZXQgV29vZGxhbmQgICAgICAgICAgICAgICAgICAgICAgICAgQnJhY2tlbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG5bMjddIExvd2xhbmQgQ2FsY2FyZW91cyBHcmFzc2xhbmQgICAgICAgICBBcmFibGUgYW5kIEhvcnRpY3VsdHVyYWwgICAgICAgICAgICBcblsyOV0gQ29uaWZlcm91cyBXb29kbGFuZCAgICAgICAgICAgICAgICAgIElubGFuZCBSb2NrIGFuZCBTY3JlZSAgICAgICAgICAgICAgIFxuMzAgTGV2ZWxzOiBBY2lkIEdyYXNzbGFuZCBBcmFibGUgYW5kIEhvcnRpY3VsdHVyYWwgQmxhbmtldCBCb2cgLi4uIFdldCBXb29kbGFuZFxuIn0= -->
-<pre><code> [1] Coastal and Floodplain Grazing Marsh Scrub                               
- [3] Lowland Fens                         Mud, Sand or Shingle                
- [5] Sea                                  Surface Water                       
- [7] Urban                                Lowland Dry Acid Grassland          
- [9] Improved Grassland                   Purple Moor Grass and Rush Pastures 
-[11] Lowland Heathland                    Broadleaved, Mixed and Yew Woodland 
-[13] Traditional Orchards                 Lowland Meadows                     
-[15] Acid Grassland                       Coastal Sand Dunes                  
-[17] Semi-improved Grassland              Lowland Raised Bog                  
-[19] Upland Calcareous Grassland          Upland Hay Meadows                  
-[21] Upland Flushes, Fens and Swamps      Upland Heathland                    
-[23] Coastal Saltmarsh                    Blanket Bog                         
-[25] Wet Woodland                         Bracken                             
-[27] Lowland Calcareous Grassland         Arable and Horticultural            
-[29] Coniferous Woodland                  Inland Rock and Scree               
-30 Levels: Acid Grassland Arable and Horticultural Blanket Bog ... Wet Woodland</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudW5pcXVlKG9ic2VydmF0aW9ucyRCcm9hZClcbmBgYCJ9 -->
-<pre class="r"><code>unique(observations$Broad)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBJbXByb3ZlZCBHcmFzc2xhbmQgICAgICAgICAgIFNjcnViIGFuZCBCcmFja2VuICAgICAgICAgICAgV2V0bGFuZCAgICAgICAgICAgICAgICAgICAgIFxuIFs0XSBNdWQsIFNhbmQgb3IgU2hpbmdsZSAgICAgICAgIFdhdGVyICAgICAgICAgICAgICAgICAgICAgICAgVXJiYW4gICAgICAgICAgICAgICAgICAgICAgIFxuIFs3XSBTcGVjaWVzIFJpY2ggR3Jhc3NsYW5kICAgICAgIEhlYXRobGFuZCBhbmQgTW9vcmxhbmQgICAgICAgRGVjaWR1b3VzIGFuZCBNaXhlZCBXb29kbGFuZFxuWzEwXSBDb2FzdGFsICAgICAgICAgICAgICAgICAgICAgIFNlbWktaW1wcm92ZWQgR3Jhc3NsYW5kICAgICAgV2V0IFdvb2RsYW5kICAgICAgICAgICAgICAgIFxuWzEzXSBBcmFibGUgICAgICAgICAgICAgICAgICAgICAgIENvbmlmZXJvdXMgV29vZGxhbmQgICAgICAgICAgSW5sYW5kIFJvY2sgYW5kIFNjcmVlICAgICAgIFxuMTUgTGV2ZWxzOiBBcmFibGUgQ29hc3RhbCBDb25pZmVyb3VzIFdvb2RsYW5kIERlY2lkdW91cyBhbmQgTWl4ZWQgV29vZGxhbmQgLi4uIFdldGxhbmRcbiJ9 -->
-<pre><code> [1] Improved Grassland           Scrub and Bracken            Wetland                     
- [4] Mud, Sand or Shingle         Water                        Urban                       
- [7] Species Rich Grassland       Heathland and Moorland       Deciduous and Mixed Woodland
-[10] Coastal                      Semi-improved Grassland      Wet Woodland                
-[13] Arable                       Coniferous Woodland          Inland Rock and Scree       
-15 Levels: Arable Coastal Coniferous Woodland Deciduous and Mixed Woodland ... Wetland</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm0ob2JzZXJ2YXRpb25zU1BERilcbmBgYCJ9 -->
-<pre class="r"><code>rm(observationsSPDF)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBtYWtlIGEgbG9naWNhbCB2ZWN0b3IgZm9yIGJsYW5rZXQgYm9nIHByZXNlbmNlXG5vYnNlcnZhdGlvbnMkYmJvZyA8LSBpZl9lbHNlKG9ic2VydmF0aW9ucyREZXRhaWxlZCA9PSBcIkJsYW5rZXQgQm9nXCIsIHRydWUgPSBcInByZXNlbnRcIiwgZmFsc2UgPSBcImFic2VudFwiKVxuYGBgIn0= -->
-<pre class="r"><code># make a logical vector for blanket bog presence
-observations$bbog &lt;- if_else(observations$Detailed == &quot;Blanket Bog&quot;, true = &quot;present&quot;, false = &quot;absent&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>reduce the number of absences to speed processing</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5kZXhTdWJzZXQgPC0gYyhcbiAgc2FtcGxlKHggPSB3aGljaChvYnNlcnZhdGlvbnMkYmJvZyAlaW4lIFwiYWJzZW50XCIpLCAjYSBzdWJzZXQgb2YgYWJzZW5jZXNcbiAgICAgICBzaXplID0gbGVuZ3RoKHdoaWNoKG9ic2VydmF0aW9ucyRiYm9nICVpbiUgXCJhYnNlbnRcIikpLzUsICNzYW1lIG51bWJlciBhcyBwcmVzZW5jZVxuICAgICAgIHJlcGxhY2UgPSBGQUxTRSksIFxuICB3aGljaChvYnNlcnZhdGlvbnMkYmJvZyAlaW4lIFwicHJlc2VudFwiKSAjaW5kZXggb2YgcHJlc2VuY2Vcbilcbmxlbmd0aChpbmRleFN1YnNldCk7IHN0cihpbmRleFN1YnNldClcbmBgYCJ9 -->
-<pre class="r"><code>indexSubset &lt;- c(
-  sample(x = which(observations$bbog %in% &quot;absent&quot;), #a subset of absences
-       size = length(which(observations$bbog %in% &quot;absent&quot;))/5, #same number as presence
-       replace = FALSE), 
-  which(observations$bbog %in% &quot;present&quot;) #index of presence
-)
-length(indexSubset); str(indexSubset)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDE1NTZcbiBpbnQgWzE6MTU1Nl0gMTM0NCAxODQ5IDE5NDcgNzg3IDQ3NDkgNDYyOSA2NDcgNDcyIDExNjIgMTMxOCAuLi5cbiJ9 -->
-<pre><code>[1] 1556
- int [1:1556] 1344 1849 1947 787 4749 4629 647 472 1162 1318 ...</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub2JzZXJ2YXRpb25zIDwtIG9ic2VydmF0aW9uc1tpbmRleFN1YnNldCxdOyBkaW0ob2JzZXJ2YXRpb25zKSAjc3Vic2V0IHRoZSBvYnNlcnZhdGlvbnMgZGF0YXNldFxuYGBgIn0= -->
-<pre class="r"><code>observations &lt;- observations[indexSubset,]; dim(observations) #subset the observations dataset</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDE1NTYgICAgNVxuIn0= -->
-<pre><code>[1] 1556    5</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -461,86 +350,32 @@ input.data$temp_max &lt;- raster::extract(
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShpbnB1dC5kYXRhKVxuYGBgIn0= -->
 <pre class="r"><code>summary(input.data)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgYmJvZyAgICAgICAgICAgZWxldiAgICAgICAgICAgICBhc3BlY3QgICAgICAgICAgIHNsb3BlICAgICAgICAgICBvdXRmbG93ICAgICAgXG4gYWJzZW50IDoxMDY4ICAgTWluLiAgIDotMTAwMC4wICAgTWluLiAgIDogIDAuMDAgICBNaW4uICAgOjAuMDAwMCAgIE1pbi4gICA6LTIuMDAwICBcbiBwcmVzZW50OiA0ODggICAxc3QgUXUuOiAgNzQyLjIgICAxc3QgUXUuOiA4Ni4zMyAgIDFzdCBRdS46MC4zMzU4ICAgMXN0IFF1LjogMi4wMDAgIFxuICAgICAgICAgICAgICAgIE1lZGlhbiA6IDI0ODYuNSAgIE1lZGlhbiA6MTY1LjQxICAgTWVkaWFuIDowLjcyODggICBNZWRpYW4gOiA2LjAwMCAgXG4gICAgICAgICAgICAgICAgTWVhbiAgIDogMjYwNi4wICAgTWVhbiAgIDoxNzYuNTIgICBNZWFuICAgOjAuNzEwOSAgIE1lYW4gICA6IDcuNzc0ICBcbiAgICAgICAgICAgICAgICAzcmQgUXUuOiA0NTA0LjAgICAzcmQgUXUuOjI3Ny42MiAgIDNyZCBRdS46MS4wNzcxICAgM3JkIFF1LjogOC4wMDAgIFxuICAgICAgICAgICAgICAgIE1heC4gICA6IDkxNDQuMCAgIE1heC4gICA6MzU5LjkwICAgTWF4LiAgIDoxLjQ4NzcgICBNYXguICAgOjQxLjAwMCAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgaW5mbG93ICAgICAgICAgICBzdXJmICAgICAgICAgIG1vb3JsaW5lICAgICAgICAgICAgZ2RkICAgICAgICAgICAgICBnc2wgICAgICAgXG4gTWluLiAgIDogIDAuMCAgIE1pbi4gICA6MC4wMDAgICBNaW4uICAgOi00NTM5LjMgICBNaW4uICAgOiA1OTUuMCAgIE1pbi4gICA6MTcwLjYgIFxuIDFzdCBRdS46ICAwLjAgICAxc3QgUXUuOjIuMDAwICAgMXN0IFF1LjogLTY1MS45ICAgMXN0IFF1LjogOTUwLjYgICAxc3QgUXUuOjIyMS44ICBcbiBNZWRpYW4gOiAgNC4wICAgTWVkaWFuIDoyLjAwMCAgIE1lZGlhbiA6ICAgNTAuMCAgIE1lZGlhbiA6MTE0OS40ICAgTWVkaWFuIDoyNTIuOCAgXG4gTWVhbiAgIDogMjguMSAgIE1lYW4gICA6MS45NzQgICBNZWFuICAgOiAxNjU5LjQgICBNZWFuICAgOjExNzAuNyAgIE1lYW4gICA6MjUzLjQgIFxuIDNyZCBRdS46IDMyLjAgICAzcmQgUXUuOjIuMDAwICAgM3JkIFF1LjogMTcxMi4zICAgM3JkIFF1LjoxNDM4LjIgICAzcmQgUXUuOjI5MC42ICBcbiBNYXguICAgOjI0OC4wICAgTWF4LiAgIDo0LjAwMCAgIE1heC4gICA6MjM1NzIuMiAgIE1heC4gICA6MTcwNi41ICAgTWF4LiAgIDozMjMuOSAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBOQSdzICAgOjIgICAgICAgIE5BJ3MgICA6MiAgICAgIFxuICAgIHJhaW5fYW5uICAgICAgcmFpbl9kYWlseSAgICByYWluZGF5c18xMG1tICAgIHJhaW5kYXlzXzFtbSAgICAgdGVtcF9tZWFuICAgIFxuIE1pbi4gICA6IDc5MyAgIE1pbi4gICA6Mi4xNzMgICBNaW4uICAgOjIwLjAwICAgTWluLiAgIDoxNDEuMiAgIE1pbi4gICA6NC41NDEgIFxuIDFzdCBRdS46MTEwOSAgIDFzdCBRdS46My4wMzkgICAxc3QgUXUuOjM2Ljk4ICAgMXN0IFF1LjoxNTkuOSAgIDFzdCBRdS46Ni40MTYgIFxuIE1lZGlhbiA6MTM2MyAgIE1lZGlhbiA6My43MzQgICBNZWRpYW4gOjQ2LjQ4ICAgTWVkaWFuIDoxNzUuMSAgIE1lZGlhbiA6Ny4zMDEgIFxuIE1lYW4gICA6MTQ0OSAgIE1lYW4gICA6My45NjkgICBNZWFuICAgOjQ4LjcwICAgTWVhbiAgIDoxNzQuNyAgIE1lYW4gICA6Ny4zNDIgIFxuIDNyZCBRdS46MTY2MyAgIDNyZCBRdS46NC41NTYgICAzcmQgUXUuOjU5LjcxICAgM3JkIFF1LjoxODkuOCAgIDNyZCBRdS46OC41NTggIFxuIE1heC4gICA6MzI2NiAgIE1heC4gICA6OC45NDggICBNYXguICAgOjkzLjYzICAgTWF4LiAgIDoyMjAuMyAgIE1heC4gICA6OS41MTAgIFxuIE5BJ3MgICA6MiAgICAgIE5BJ3MgICA6MiAgICAgICBOQSdzICAgOjIgICAgICAgTkEncyAgIDoyICAgICAgIE5BJ3MgICA6MiAgICAgIFxuICAgIHRlbXBfbWluICAgICAgICB0ZW1wX21heCAgICAgXG4gTWluLiAgIDoxLjk0NyAgIE1pbi4gICA6IDcuMTY4ICBcbiAxc3QgUXUuOjMuMzQ1ICAgMXN0IFF1LjogOS41MTYgIFxuIE1lZGlhbiA6My45MTMgICBNZWRpYW4gOjEwLjY3MyAgXG4gTWVhbiAgIDo0LjA0MCAgIE1lYW4gICA6MTAuNjQ3ICBcbiAzcmQgUXUuOjQuOTA1ICAgM3JkIFF1LjoxMi4wODcgIFxuIE1heC4gICA6Ni43OTcgICBNYXguICAgOjEyLjg3NyAgXG4gTkEncyAgIDoyICAgICAgIE5BJ3MgICA6MiAgICAgICBcbiJ9 -->
-<pre><code>      bbog           elev             aspect           slope           outflow      
- absent :1068   Min.   :-1000.0   Min.   :  0.00   Min.   :0.0000   Min.   :-2.000  
- present: 488   1st Qu.:  742.2   1st Qu.: 86.33   1st Qu.:0.3358   1st Qu.: 2.000  
-                Median : 2486.5   Median :165.41   Median :0.7288   Median : 6.000  
-                Mean   : 2606.0   Mean   :176.52   Mean   :0.7109   Mean   : 7.774  
-                3rd Qu.: 4504.0   3rd Qu.:277.62   3rd Qu.:1.0771   3rd Qu.: 8.000  
-                Max.   : 9144.0   Max.   :359.90   Max.   :1.4877   Max.   :41.000  
-                                                                                    
-     inflow           surf          moorline            gdd              gsl       
- Min.   :  0.0   Min.   :0.000   Min.   :-4539.3   Min.   : 595.0   Min.   :170.6  
- 1st Qu.:  0.0   1st Qu.:2.000   1st Qu.: -651.9   1st Qu.: 950.6   1st Qu.:221.8  
- Median :  4.0   Median :2.000   Median :   50.0   Median :1149.4   Median :252.8  
- Mean   : 28.1   Mean   :1.974   Mean   : 1659.4   Mean   :1170.7   Mean   :253.4  
- 3rd Qu.: 32.0   3rd Qu.:2.000   3rd Qu.: 1712.3   3rd Qu.:1438.2   3rd Qu.:290.6  
- Max.   :248.0   Max.   :4.000   Max.   :23572.2   Max.   :1706.5   Max.   :323.9  
-                                                   NA's   :2        NA's   :2      
-    rain_ann      rain_daily    raindays_10mm    raindays_1mm     temp_mean    
- Min.   : 793   Min.   :2.173   Min.   :20.00   Min.   :141.2   Min.   :4.541  
- 1st Qu.:1109   1st Qu.:3.039   1st Qu.:36.98   1st Qu.:159.9   1st Qu.:6.416  
- Median :1363   Median :3.734   Median :46.48   Median :175.1   Median :7.301  
- Mean   :1449   Mean   :3.969   Mean   :48.70   Mean   :174.7   Mean   :7.342  
- 3rd Qu.:1663   3rd Qu.:4.556   3rd Qu.:59.71   3rd Qu.:189.8   3rd Qu.:8.558  
- Max.   :3266   Max.   :8.948   Max.   :93.63   Max.   :220.3   Max.   :9.510  
- NA's   :2      NA's   :2       NA's   :2       NA's   :2       NA's   :2      
-    temp_min        temp_max     
- Min.   :1.947   Min.   : 7.168  
- 1st Qu.:3.345   1st Qu.: 9.516  
- Median :3.913   Median :10.673  
- Mean   :4.040   Mean   :10.647  
- 3rd Qu.:4.905   3rd Qu.:12.087  
- Max.   :6.797   Max.   :12.877  
- NA's   :2       NA's   :2       </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgYmJvZyAgICAgICAgICBlbGV2ICAgICAgICAgIGFzcGVjdCAgICAgICAgICAgIHNsb3BlICAgICAgICAgICAgb3V0ZmxvdyAgICAgICAgICAgaW5mbG93ICAgICAgXG4gYWJzZW50IDoyMDAgICBNaW4uICAgOiA4NjkgICBNaW4uICAgOiAgMC4zMTIgICBNaW4uICAgOjAuMDE1ODEgICBNaW4uICAgOiAxLjAwMCAgIE1pbi4gICA6ICAwLjAwICBcbiBwcmVzZW50OjEzNSAgIDFzdCBRdS46Mjg0OCAgIDFzdCBRdS46IDk2LjUzMyAgIDFzdCBRdS46MC41MDQ2NyAgIDFzdCBRdS46IDMuMDAwICAgMXN0IFF1LjogIDAuMDAgIFxuICAgICAgICAgICAgICAgTWVkaWFuIDozNzkxICAgTWVkaWFuIDoxODIuNTc5ICAgTWVkaWFuIDowLjc5ODAzICAgTWVkaWFuIDogNi4wMDAgICBNZWRpYW4gOiAgNC4wMCAgXG4gICAgICAgICAgICAgICBNZWFuICAgOjM3NzIgICBNZWFuICAgOjE4My40NTggICBNZWFuICAgOjAuNzUzMTQgICBNZWFuICAgOiA2LjE2NyAgIE1lYW4gICA6IDI4Ljk2ICBcbiAgICAgICAgICAgICAgIDNyZCBRdS46NDY2OCAgIDNyZCBRdS46Mjg0LjU0OSAgIDNyZCBRdS46MS4wMDY2MSAgIDNyZCBRdS46IDguMDAwICAgM3JkIFF1LjogMzIuMDAgIFxuICAgICAgICAgICAgICAgTWF4LiAgIDo2OTY4ICAgTWF4LiAgIDozNTguODg3ICAgTWF4LiAgIDoxLjM4NDIwICAgTWF4LiAgIDozOC4wMDAgICBNYXguICAgOjI0MC4wMCAgXG4gICAgICBzdXJmICAgICAgICAgIG1vb3JsaW5lICAgICAgICAgICAgZ2RkICAgICAgICAgICAgICBnc2wgICAgICAgICAgIHJhaW5fYW5uICAgICAgICByYWluX2RhaWx5ICAgXG4gTWluLiAgIDoyLjAwMCAgIE1pbi4gICA6LTI0ODIuNCAgIE1pbi4gICA6IDc5MS42ICAgTWluLiAgIDoxOTQuOSAgIE1pbi4gICA6IDc1Mi44ICAgTWluLiAgIDoyLjA2MiAgXG4gMXN0IFF1LjoyLjAwMCAgIDFzdCBRdS46IC03NjQuMCAgIDFzdCBRdS46IDkzMS4wICAgMXN0IFF1LjoyMTEuMyAgIDFzdCBRdS46MTEyMC4zICAgMXN0IFF1LjozLjA2OSAgXG4gTWVkaWFuIDoyLjAwMCAgIE1lZGlhbiA6IC0yMTIuMSAgIE1lZGlhbiA6MTAyNy45ICAgTWVkaWFuIDoyMjYuNiAgIE1lZGlhbiA6MTM4NC43ICAgTWVkaWFuIDozLjc5NCAgXG4gTWVhbiAgIDoyLjA0OCAgIE1lYW4gICA6IC0yMTcuMCAgIE1lYW4gICA6MTA0Ni42ICAgTWVhbiAgIDoyMjkuMCAgIE1lYW4gICA6MTM5MS4wICAgTWVhbiAgIDozLjgxMSAgXG4gM3JkIFF1LjoyLjAwMCAgIDNyZCBRdS46ICAyMDAuMCAgIDNyZCBRdS46MTE0MC44ICAgM3JkIFF1LjoyNDEuNiAgIDNyZCBRdS46MTY2MS4zICAgM3JkIFF1Ljo0LjU1MiAgXG4gTWF4LiAgIDo0LjAwMCAgIE1heC4gICA6IDQ1MDAuMyAgIE1heC4gICA6MTQ1MS45ICAgTWF4LiAgIDoyOTIuMyAgIE1heC4gICA6MjAyMC4wICAgTWF4LiAgIDo1LjUzNCAgXG4gcmFpbmRheXNfMTBtbSAgICByYWluZGF5c18xbW0gICAgIHRlbXBfbWVhbiAgICAgICAgdGVtcF9taW4gICAgICAgIHRlbXBfbWF4ICAgICBcbiBNaW4uICAgOjIxLjYxICAgTWluLiAgIDoxMzUuNSAgIE1pbi4gICA6NS42NDEgICBNaW4uICAgOjIuNzY4ICAgTWluLiAgIDogOC40MzEgIFxuIDFzdCBRdS46MzcuOTAgICAxc3QgUXUuOjE2Ni45ICAgMXN0IFF1Ljo2LjM2NiAgIDFzdCBRdS46My4zNDMgICAxc3QgUXUuOiA5LjM5MSAgXG4gTWVkaWFuIDo1Mi4xMiAgIE1lZGlhbiA6MTc5LjUgICBNZWRpYW4gOjYuNzk0ICAgTWVkaWFuIDozLjY0NSAgIE1lZGlhbiA6IDkuODgyICBcbiBNZWFuICAgOjQ4LjAwICAgTWVhbiAgIDoxNzUuOCAgIE1lYW4gICA6Ni44NjMgICBNZWFuICAgOjMuNjgyICAgTWVhbiAgIDoxMC4wMTggIFxuIDNyZCBRdS46NTguMTAgICAzcmQgUXUuOjE4OC40ICAgM3JkIFF1Ljo3LjI4NiAgIDNyZCBRdS46My45NDcgICAzcmQgUXUuOjEwLjYzMyAgXG4gTWF4LiAgIDo2NC4zNSAgIE1heC4gICA6MTk0LjEgICBNYXguICAgOjguNTUxICAgTWF4LiAgIDo1LjA3NyAgIE1heC4gICA6MTIuMDEyICBcbiJ9 -->
+<pre><code>      bbog          elev          aspect            slope            outflow           inflow      
+ absent :200   Min.   : 869   Min.   :  0.312   Min.   :0.01581   Min.   : 1.000   Min.   :  0.00  
+ present:135   1st Qu.:2848   1st Qu.: 96.533   1st Qu.:0.50467   1st Qu.: 3.000   1st Qu.:  0.00  
+               Median :3791   Median :182.579   Median :0.79803   Median : 6.000   Median :  4.00  
+               Mean   :3772   Mean   :183.458   Mean   :0.75314   Mean   : 6.167   Mean   : 28.96  
+               3rd Qu.:4668   3rd Qu.:284.549   3rd Qu.:1.00661   3rd Qu.: 8.000   3rd Qu.: 32.00  
+               Max.   :6968   Max.   :358.887   Max.   :1.38420   Max.   :38.000   Max.   :240.00  
+      surf          moorline            gdd              gsl           rain_ann        rain_daily   
+ Min.   :2.000   Min.   :-2482.4   Min.   : 791.6   Min.   :194.9   Min.   : 752.8   Min.   :2.062  
+ 1st Qu.:2.000   1st Qu.: -764.0   1st Qu.: 931.0   1st Qu.:211.3   1st Qu.:1120.3   1st Qu.:3.069  
+ Median :2.000   Median : -212.1   Median :1027.9   Median :226.6   Median :1384.7   Median :3.794  
+ Mean   :2.048   Mean   : -217.0   Mean   :1046.6   Mean   :229.0   Mean   :1391.0   Mean   :3.811  
+ 3rd Qu.:2.000   3rd Qu.:  200.0   3rd Qu.:1140.8   3rd Qu.:241.6   3rd Qu.:1661.3   3rd Qu.:4.552  
+ Max.   :4.000   Max.   : 4500.3   Max.   :1451.9   Max.   :292.3   Max.   :2020.0   Max.   :5.534  
+ raindays_10mm    raindays_1mm     temp_mean        temp_min        temp_max     
+ Min.   :21.61   Min.   :135.5   Min.   :5.641   Min.   :2.768   Min.   : 8.431  
+ 1st Qu.:37.90   1st Qu.:166.9   1st Qu.:6.366   1st Qu.:3.343   1st Qu.: 9.391  
+ Median :52.12   Median :179.5   Median :6.794   Median :3.645   Median : 9.882  
+ Mean   :48.00   Mean   :175.8   Mean   :6.863   Mean   :3.682   Mean   :10.018  
+ 3rd Qu.:58.10   3rd Qu.:188.4   3rd Qu.:7.286   3rd Qu.:3.947   3rd Qu.:10.633  
+ Max.   :64.35   Max.   :194.1   Max.   :8.551   Max.   :5.077   Max.   :12.012  </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>looking at the data frame and the summary above, there are a few errors. There are 600 records where the elevation is -1000, all of these are not blanket bog. Also there are 24 records where the climate data is NA (these coincide with the -1000 elevation.) We will remove the records where elevation is -1,000.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5wdXQuZGF0YSA8LSBmaWx0ZXIoaW5wdXQuZGF0YSwgZWxldiAhPSAtMTAwMClcbmBgYCJ9 -->
-<pre class="r"><code>input.data &lt;- filter(input.data, elev != -1000)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDjpLzjuLFiaW5kcmNwcOOkvOO4siB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuMy4zXG4ifQ== -->
-<pre><code>package 㤼㸱bindrcpp㤼㸲 was built under R version 3.3.3</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShpbnB1dC5kYXRhKVxuYGBgIn0= -->
-<pre class="r"><code>summary(input.data)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgYmJvZyAgICAgICAgICBlbGV2ICAgICAgICAgIGFzcGVjdCAgICAgICAgICAgc2xvcGUgICAgICAgICAgIG91dGZsb3cgICAgICBcbiBhYnNlbnQgOjk1NCAgIE1pbi4gICA6ICAyNSAgIE1pbi4gICA6ICAwLjAwICAgTWluLiAgIDowLjAwMDAgICBNaW4uICAgOiAxLjAwMCAgXG4gcHJlc2VudDo0ODggICAxc3QgUXUuOjExNTcgICAxc3QgUXUuOiA4My40MiAgIDFzdCBRdS46MC4zNTgzICAgMXN0IFF1LjogMy4wMDAgIFxuICAgICAgICAgICAgICAgTWVkaWFuIDoyNzUyICAgTWVkaWFuIDoxNzMuMzIgICBNZWRpYW4gOjAuNzI4OCAgIE1lZGlhbiA6IDYuMDAwICBcbiAgICAgICAgICAgICAgIE1lYW4gICA6Mjg5MSAgIE1lYW4gICA6MTc5LjMyICAgTWVhbiAgIDowLjcxMDMgICBNZWFuICAgOiA4LjU0NiAgXG4gICAgICAgICAgICAgICAzcmQgUXUuOjQ2MzIgICAzcmQgUXUuOjI4MS41OSAgIDNyZCBRdS46MS4wNTExICAgM3JkIFF1LjogOC4wMDAgIFxuICAgICAgICAgICAgICAgTWF4LiAgIDo5MTQ0ICAgTWF4LiAgIDozNTkuODUgICBNYXguICAgOjEuNDg3NSAgIE1heC4gICA6NDEuMDAwICBcbiAgICAgaW5mbG93ICAgICAgICAgICAgc3VyZiAgICAgICAgIG1vb3JsaW5lICAgICAgICAgICAgZ2RkICAgICAgICAgICAgICBnc2wgICAgICAgXG4gTWluLiAgIDogIDAuMDAgICBNaW4uICAgOjIuMDAgICBNaW4uICAgOi00NTM5LjMgICBNaW4uICAgOiA1OTUuMCAgIE1pbi4gICA6MTcwLjYgIFxuIDFzdCBRdS46ICAwLjAwICAgMXN0IFF1LjoyLjAwICAgMXN0IFF1LjogLTc0My4zICAgMXN0IFF1LjogOTM5LjQgICAxc3QgUXUuOjIxNy42ICBcbiBNZWRpYW4gOiAgNC4wMCAgIE1lZGlhbiA6Mi4wMCAgIE1lZGlhbiA6ICAtNTAuMCAgIE1lZGlhbiA6MTEyNy4xICAgTWVkaWFuIDoyNDguOSAgXG4gTWVhbiAgIDogMjkuMjIgICBNZWFuICAgOjIuMTMgICBNZWFuICAgOiAxMTU5LjkgICBNZWFuICAgOjExMzkuOSAgIE1lYW4gICA6MjQ5LjEgIFxuIDNyZCBRdS46IDMyLjAwICAgM3JkIFF1LjoyLjAwICAgM3JkIFF1LjogIDk1MS4zICAgM3JkIFF1LjoxMzYyLjcgICAzcmQgUXUuOjI4NC4yICBcbiBNYXguICAgOjI0OC4wMCAgIE1heC4gICA6NC4wMCAgIE1heC4gICA6MjE5MTQuNiAgIE1heC4gICA6MTcwNi41ICAgTWF4LiAgIDozMjMuOSAgXG4gICAgcmFpbl9hbm4gICAgICByYWluX2RhaWx5ICAgIHJhaW5kYXlzXzEwbW0gICAgcmFpbmRheXNfMW1tICAgICB0ZW1wX21lYW4gICAgXG4gTWluLiAgIDogNzkzICAgTWluLiAgIDoyLjE3MyAgIE1pbi4gICA6MjAuMDAgICBNaW4uICAgOjE0MS4yICAgTWluLiAgIDo0LjU0MSAgXG4gMXN0IFF1LjoxMTMyICAgMXN0IFF1LjozLjEwMiAgIDFzdCBRdS46MzcuNzYgICAxc3QgUXUuOjE2My40ICAgMXN0IFF1Ljo2LjM0OSAgXG4gTWVkaWFuIDoxMzkyICAgTWVkaWFuIDozLjgxMyAgIE1lZGlhbiA6NDguNTMgICBNZWRpYW4gOjE3Ny44ICAgTWVkaWFuIDo3LjE5MiAgXG4gTWVhbiAgIDoxNDc4ICAgTWVhbiAgIDo0LjA1MCAgIE1lYW4gICA6NDkuNzUgICBNZWFuICAgOjE3Ni4zICAgTWVhbiAgIDo3LjIwNiAgXG4gM3JkIFF1LjoxNjg4ICAgM3JkIFF1Ljo0LjYyMyAgIDNyZCBRdS46NjAuNTQgICAzcmQgUXUuOjE5MC41ICAgM3JkIFF1Ljo4LjE5NiAgXG4gTWF4LiAgIDozMjY2ICAgTWF4LiAgIDo4Ljk0OCAgIE1heC4gICA6OTMuNjMgICBNYXguICAgOjIyMC4zICAgTWF4LiAgIDo5LjUxMCAgXG4gICAgdGVtcF9taW4gICAgICAgIHRlbXBfbWF4ICAgICBcbiBNaW4uICAgOjEuOTQ3ICAgTWluLiAgIDogNy4xNjggIFxuIDFzdCBRdS46My4yNDUgICAxc3QgUXUuOiA5LjQzNSAgXG4gTWVkaWFuIDozLjg0MSAgIE1lZGlhbiA6MTAuNTQxICBcbiBNZWFuICAgOjMuOTA4ICAgTWVhbiAgIDoxMC41MDUgIFxuIDNyZCBRdS46NC41NjUgICAzcmQgUXUuOjExLjc5NyAgXG4gTWF4LiAgIDo2Ljc5NyAgIE1heC4gICA6MTIuODc2ICBcbiJ9 -->
-<pre><code>      bbog          elev          aspect           slope           outflow      
- absent :954   Min.   :  25   Min.   :  0.00   Min.   :0.0000   Min.   : 1.000  
- present:488   1st Qu.:1157   1st Qu.: 83.42   1st Qu.:0.3583   1st Qu.: 3.000  
-               Median :2752   Median :173.32   Median :0.7288   Median : 6.000  
-               Mean   :2891   Mean   :179.32   Mean   :0.7103   Mean   : 8.546  
-               3rd Qu.:4632   3rd Qu.:281.59   3rd Qu.:1.0511   3rd Qu.: 8.000  
-               Max.   :9144   Max.   :359.85   Max.   :1.4875   Max.   :41.000  
-     inflow            surf         moorline            gdd              gsl       
- Min.   :  0.00   Min.   :2.00   Min.   :-4539.3   Min.   : 595.0   Min.   :170.6  
- 1st Qu.:  0.00   1st Qu.:2.00   1st Qu.: -743.3   1st Qu.: 939.4   1st Qu.:217.6  
- Median :  4.00   Median :2.00   Median :  -50.0   Median :1127.1   Median :248.9  
- Mean   : 29.22   Mean   :2.13   Mean   : 1159.9   Mean   :1139.9   Mean   :249.1  
- 3rd Qu.: 32.00   3rd Qu.:2.00   3rd Qu.:  951.3   3rd Qu.:1362.7   3rd Qu.:284.2  
- Max.   :248.00   Max.   :4.00   Max.   :21914.6   Max.   :1706.5   Max.   :323.9  
-    rain_ann      rain_daily    raindays_10mm    raindays_1mm     temp_mean    
- Min.   : 793   Min.   :2.173   Min.   :20.00   Min.   :141.2   Min.   :4.541  
- 1st Qu.:1132   1st Qu.:3.102   1st Qu.:37.76   1st Qu.:163.4   1st Qu.:6.349  
- Median :1392   Median :3.813   Median :48.53   Median :177.8   Median :7.192  
- Mean   :1478   Mean   :4.050   Mean   :49.75   Mean   :176.3   Mean   :7.206  
- 3rd Qu.:1688   3rd Qu.:4.623   3rd Qu.:60.54   3rd Qu.:190.5   3rd Qu.:8.196  
- Max.   :3266   Max.   :8.948   Max.   :93.63   Max.   :220.3   Max.   :9.510  
-    temp_min        temp_max     
- Min.   :1.947   Min.   : 7.168  
- 1st Qu.:3.245   1st Qu.: 9.435  
- Median :3.841   Median :10.541  
- Mean   :3.908   Mean   :10.505  
- 3rd Qu.:4.565   3rd Qu.:11.797  
- Max.   :6.797   Max.   :12.876  </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
+<p>looks fine</p>
 </div>
 </div>
 <div id="export-to-file" class="section level2">
@@ -554,7 +389,7 @@ write.csv(input.data, file = &quot;../data/input_data.csv&quot;, row.names = F)<
 <!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkVuZ2xhbmQgQmxhbmtldCBCb2cgTW9kZWw6IENyZWF0ZSB0cmFpbmluZyBkYXRhIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KIyMgUGFja2FnZXMgDQpgYGB7cn0NCmxpYnJhcnkocmFzdGVyKQ0KbGlicmFyeShyZ2RhbCkNCg0KbGlicmFyeSh0aWR5dmVyc2UpDQpgYGANCg0KIyMgSW1wb3J0IGRhdGENCg0KIyMjIEltcG9ydCBvYnNlcnZhdGlvbnM6IGxhbmQgY2xhc3NpZmljYXRpb24gZmlsZSANCmBgYHtyfQ0KY2xhc3NlcyA8LSAiLi4vZGF0YS9GRVBfcG9pbnRzL0NhdGNobWVudF9GRVBfT1NfVHJhaW5pbmdQb2ludHNfZmluYWxfY2xlYW4uc2hwIg0Kb2dySW5mbyhjbGFzc2VzKQ0KDQojc2F2ZSB0aGUgc2hhcGVmaWxlIGludG8gYW4gb2JqZWN0DQpvYnNlcnZhdGlvbnNTUERGIDwtIHJlYWRPR1IoZHNuID0gY2xhc3NlcywgdmVyYm9zZSA9IFRSVUUpDQoNCnJtKGNsYXNzZXMpDQpgYGANCg0KIyMjIEltcG9ydCBwcmVkaWN0b3IgZGF0YQ0KYGBge3J9DQojIEltcG9ydCBlbnZpcm9ubWVudGFsIGFuZCB0b3BvZ3JhcGhpYyBkYXRhDQojbG9hZChmaWxlID0gIi4uL2RhdGEvdG9wb19lbnZfZGF0YS5yZGEiKQ0KDQplbGV2IDwtIHJhc3RlcigiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnRpZiIsIGJhbmQgPSAxKQ0Kc3VyZiA8LSByYXN0ZXIoIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWYiLCBiYW5kID0gMikNCmluZmxvdyA8LSByYXN0ZXIoIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWYiLCBiYW5kID0gMykNCm91dGZsb3cgPC0gcmFzdGVyKCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmIiwgYmFuZCA9IDQpDQpzbG9wZSA8LSByYXN0ZXIoIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWYiLCBiYW5kID0gNSkNCmFzcGVjdCA8LSByYXN0ZXIoIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWYiLCBiYW5kID0gNikNCm1vb3JsaW5lIDwtIHJhc3RlcigiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnRpZiIsIGJhbmQgPSA3KQ0KDQojIEltcG9ydCBVS0NQMDkgY2xpbWF0ZSBkYXRhDQojbG9hZChmaWxlID0gIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC5yZGEiKQ0KZ2RkXzE5NjBfOTBfYW5uIDwtIHJhc3RlcigiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZiIsIGJhbmQgPSAxKQ0KZ3NsXzE5NjBfOTBfYW5uIDwtIHJhc3RlcigiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZiIsIGJhbmQgPSAyKQ0KcmFpbl8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWYiLCBiYW5kID0gMykNCnJhaW5fZGFpbHlfbWVhbl8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWYiLCBiYW5kID0gNCkNCnJhaW5kYXlzXzFtbV8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWYiLCBiYW5kID0gNSkNCnJhaW5kYXlzXzEwbW1fMTk2MF85MF9hbm51YWwgPC0gcmFzdGVyKCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmIiwgYmFuZCA9IDYpDQp0ZW1wX21lYW5fMTk2MF85MF9hbm51YWwgPC0gcmFzdGVyKCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmIiwgYmFuZCA9IDcpDQp0ZW1wX21pbl8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWYiLCBiYW5kID0gOCkNCnRlbXBfbWF4XzE5NjBfOTBfYW5udWFsIDwtIHJhc3RlcigiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZiIsIGJhbmQgPSA5KQ0KDQpgYGANCg0KIyMgcHJlcGFyZSBvYnNlcnZhdGlvbnMNCmBgYHtyfQ0KI3Jhc3Rlcjo6ZXh0cmFjdCBtZXRhZGF0YQ0KYm91bmRib3ggPC0gb2JzZXJ2YXRpb25zU1BERkBiYm94OyBib3VuZGJveCANCkNSUyA8LSBvYnNlcnZhdGlvbnNTUERGQHByb2o0c3RyaW5nDQpgYGANCg0KYGBge3J9DQojZmlsdGVyIG9ic2VydmF0aW9ucw0Kb2JzZXJ2YXRpb25zIDwtIG9ic2VydmF0aW9uc1NQREZbd2hpY2gob2JzZXJ2YXRpb25zU1BERkBkYXRhJFRpZXIgPT0gMSB8IG9ic2VydmF0aW9uc1NQREZAZGF0YSRUaWVyID09IDIpLF0NCnN1bW1hcnkob2JzZXJ2YXRpb25zKTsgY2xhc3Mob2JzZXJ2YXRpb25zKQ0KdW5pcXVlKG9ic2VydmF0aW9ucyREZXRhaWxlZCkNCnVuaXF1ZShvYnNlcnZhdGlvbnMkQnJvYWQpDQoNCnJtKG9ic2VydmF0aW9uc1NQREYpDQpgYGANCg0KYGBge3J9DQojIG1ha2UgYSBsb2dpY2FsIHZlY3RvciBmb3IgYmxhbmtldCBib2cgcHJlc2VuY2UNCm9ic2VydmF0aW9ucyRiYm9nIDwtIGlmX2Vsc2Uob2JzZXJ2YXRpb25zJERldGFpbGVkID09ICJCbGFua2V0IEJvZyIsIHRydWUgPSAicHJlc2VudCIsIGZhbHNlID0gImFic2VudCIpDQpgYGANCg0KcmVkdWNlIHRoZSBudW1iZXIgb2YgYWJzZW5jZXMgdG8gc3BlZWQgcHJvY2Vzc2luZyANCmBgYHtyfQ0KaW5kZXhTdWJzZXQgPC0gYygNCiAgc2FtcGxlKHggPSB3aGljaChvYnNlcnZhdGlvbnMkYmJvZyAlaW4lICJhYnNlbnQiKSwgI2Egc3Vic2V0IG9mIGFic2VuY2VzDQogICAgICAgc2l6ZSA9IGxlbmd0aCh3aGljaChvYnNlcnZhdGlvbnMkYmJvZyAlaW4lICJhYnNlbnQiKSkvNSwgI3JlZHVjZSBieSBhIGZpZnRoDQogICAgICAgcmVwbGFjZSA9IEZBTFNFKSwgDQogIHdoaWNoKG9ic2VydmF0aW9ucyRiYm9nICVpbiUgInByZXNlbnQiKSAjaW5kZXggb2YgcHJlc2VuY2UNCikNCmxlbmd0aChpbmRleFN1YnNldCk7IHN0cihpbmRleFN1YnNldCkNCg0Kb2JzZXJ2YXRpb25zIDwtIG9ic2VydmF0aW9uc1tpbmRleFN1YnNldCxdOyBkaW0ob2JzZXJ2YXRpb25zKSAjc3Vic2V0IHRoZSBvYnNlcnZhdGlvbnMgZGF0YXNldA0KYGBgDQoNCg0KIyMgQ3JlYXRlIGlucHV0IGRhdGFzZXQNCg0KYGBge3J9DQojY3JlYXRlIGRhdGFmcmFtZSB3aXRoIHBlYXQgZGVwdGggYXMgZmlyc3QgY29sDQppbnB1dC5kYXRhIDwtIGRhdGEuZnJhbWUoYmJvZyA9IG9ic2VydmF0aW9ucyRiYm9nKQ0KDQojcmFzdGVyOjpleHRyYWN0IGVudmlyb25tZW50YWwgYW5kIHRvcG9ncmFwaGljIGRhdGEgZm9yIGVhY2ggcGVhdCBkZXB0aCBtZWFzdXJlbWVudA0KaW5wdXQuZGF0YSRlbGV2IDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgZWxldiwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSkNCmlucHV0LmRhdGEkYXNwZWN0IDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgYXNwZWN0LCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSRzbG9wZSA8LSByYXN0ZXI6OmV4dHJhY3QoDQogIHNsb3BlLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSRvdXRmbG93IDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgb3V0ZmxvdywgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSkNCmlucHV0LmRhdGEkaW5mbG93IDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgaW5mbG93LCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSRzdXJmIDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgc3VyZiwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSkNCmlucHV0LmRhdGEkbW9vcmxpbmUgPC0gcmFzdGVyOjpleHRyYWN0KA0KICBtb29ybGluZSwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSkNCg0KI3Jhc3Rlcjo6ZXh0cmFjdCBjbGltYXRlIGRhdGEgZm9yIGVhY2ggcGVhdCBkZXB0aCBtZWFzdXJlbWVudA0KaW5wdXQuZGF0YSRnZGQgPC0gcmFzdGVyOjpleHRyYWN0KA0KICBnZGRfMTk2MF85MF9hbm4sIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pDQppbnB1dC5kYXRhJGdzbCA8LSByYXN0ZXI6OmV4dHJhY3QoDQogIGdzbF8xOTYwXzkwX2FubiwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSkNCmlucHV0LmRhdGEkcmFpbl9hbm4gPC0gcmFzdGVyOjpleHRyYWN0KA0KICByYWluXzE5NjBfOTBfYW5udWFsLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSRyYWluX2RhaWx5IDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgcmFpbl9kYWlseV9tZWFuXzE5NjBfOTBfYW5udWFsLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSRyYWluZGF5c18xMG1tIDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgcmFpbmRheXNfMTBtbV8xOTYwXzkwX2FubnVhbCwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSkNCmlucHV0LmRhdGEkcmFpbmRheXNfMW1tIDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgcmFpbmRheXNfMW1tXzE5NjBfOTBfYW5udWFsLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSR0ZW1wX21lYW4gPC0gcmFzdGVyOjpleHRyYWN0KA0KICB0ZW1wX21lYW5fMTk2MF85MF9hbm51YWwsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pDQppbnB1dC5kYXRhJHRlbXBfbWluIDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgdGVtcF9taW5fMTk2MF85MF9hbm51YWwsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pDQppbnB1dC5kYXRhJHRlbXBfbWF4IDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgdGVtcF9tYXhfMTk2MF85MF9hbm51YWwsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pDQpgYGANCg0KIyMjIHJlbW92ZSBlcnJvcnMgYW5kIG91dGxpZXJzIGZyb20gdHJhaW5pbmcgZGF0YQ0KYGBge3J9DQpzdW1tYXJ5KGlucHV0LmRhdGEpDQpgYGANCg0KbG9va2luZyBhdCB0aGUgZGF0YSBmcmFtZSBhbmQgdGhlIHN1bW1hcnkgYWJvdmUsIHRoZXJlIGFyZSBhIGZldyBlcnJvcnMuICBUaGVyZSBhcmUgNjAwIHJlY29yZHMgd2hlcmUgdGhlIGVsZXZhdGlvbiBpcyAtMTAwMCwgYWxsIG9mIHRoZXNlIGFyZSBub3QgYmxhbmtldCBib2cuICBBbHNvIHRoZXJlIGFyZSAyNCByZWNvcmRzIHdoZXJlIHRoZSBjbGltYXRlIGRhdGEgaXMgTkEgKHRoZXNlIGNvaW5jaWRlIHdpdGggdGhlIC0xMDAwIGVsZXZhdGlvbi4pICBXZSB3aWxsIHJlbW92ZSB0aGUgcmVjb3JkcyB3aGVyZSBlbGV2YXRpb24gaXMgLTEsMDAwLiANCg0KYGBge3J9DQppbnB1dC5kYXRhIDwtIGZpbHRlcihpbnB1dC5kYXRhLCBlbGV2ICE9IC0xMDAwKQ0Kc3VtbWFyeShpbnB1dC5kYXRhKQ0KYGBgDQoNCg0KDQoNCg0KDQojIyBleHBvcnQgdG8gZmlsZQ0KDQpgYGB7cn0NCnNhdmUoaW5wdXQuZGF0YSwgZmlsZT0iLi4vZGF0YS9pbnB1dC5kYXRhLnJkcyIpDQp3cml0ZS5jc3YoaW5wdXQuZGF0YSwgZmlsZSA9ICIuLi9kYXRhL2lucHV0X2RhdGEuY3N2Iiwgcm93Lm5hbWVzID0gRikNCmBgYA0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkVuZ2xhbmQgQmxhbmtldCBCb2cgTW9kZWw6IENyZWF0ZSB0cmFpbmluZyBkYXRhIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KIyMgUGFja2FnZXMgDQpgYGB7cn0NCmxpYnJhcnkocmFzdGVyKQ0KbGlicmFyeShyZ2RhbCkNCg0KbGlicmFyeSh0aWR5dmVyc2UpDQpgYGANCg0KIyMgSW1wb3J0IGRhdGENCg0KIyMjIEltcG9ydCBvYnNlcnZhdGlvbnM6IGxhbmQgY2xhc3NpZmljYXRpb24gZmlsZSANCmBgYHtyfQ0KI3NhdmUgdGhlIHNoYXBlZmlsZSBpbnRvIGFuIG9iamVjdA0Kb2JzZXJ2YXRpb25zU1BERiA8LSByZWFkT0dSKGRzbiA9ICIuLi9kYXRhL29ic2VydmF0aW9ucy5zaHAiLCB2ZXJib3NlID0gVFJVRSkNCmBgYA0KDQojIyMgSW1wb3J0IHByZWRpY3RvciBkYXRhDQpgYGB7cn0NCiMgSW1wb3J0IGVudmlyb25tZW50YWwgYW5kIHRvcG9ncmFwaGljIGRhdGENCiNsb2FkKGZpbGUgPSAiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnJkYSIpICNydW4gdGhpcyB0byBza2lwIHN0ZXBzIGJlbG93DQoNCmVsZXYgPC0gcmFzdGVyKCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmIiwgYmFuZCA9IDEpDQpzdXJmIDwtIHJhc3RlcigiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnRpZiIsIGJhbmQgPSAyKQ0KaW5mbG93IDwtIHJhc3RlcigiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnRpZiIsIGJhbmQgPSAzKQ0Kb3V0ZmxvdyA8LSByYXN0ZXIoIi4uL2RhdGEvdG9wb19lbnZfZGF0YS50aWYiLCBiYW5kID0gNCkNCnNsb3BlIDwtIHJhc3RlcigiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnRpZiIsIGJhbmQgPSA1KQ0KYXNwZWN0IDwtIHJhc3RlcigiLi4vZGF0YS90b3BvX2Vudl9kYXRhLnRpZiIsIGJhbmQgPSA2KQ0KbW9vcmxpbmUgPC0gcmFzdGVyKCIuLi9kYXRhL3RvcG9fZW52X2RhdGEudGlmIiwgYmFuZCA9IDcpDQoNCiMgSW1wb3J0IFVLQ1AwOSBjbGltYXRlIGRhdGENCiNsb2FkKGZpbGUgPSAiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnJkYSIpICMgcnVuIHRoaXMgdG8gc2tpcCBzdGVwcyBiZWxvdw0KZ2RkXzE5NjBfOTBfYW5uIDwtIHJhc3RlcigiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZiIsIGJhbmQgPSAxKQ0KZ3NsXzE5NjBfOTBfYW5uIDwtIHJhc3RlcigiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZiIsIGJhbmQgPSAyKQ0KcmFpbl8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWYiLCBiYW5kID0gMykNCnJhaW5fZGFpbHlfbWVhbl8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWYiLCBiYW5kID0gNCkNCnJhaW5kYXlzXzFtbV8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWYiLCBiYW5kID0gNSkNCnJhaW5kYXlzXzEwbW1fMTk2MF85MF9hbm51YWwgPC0gcmFzdGVyKCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmIiwgYmFuZCA9IDYpDQp0ZW1wX21lYW5fMTk2MF85MF9hbm51YWwgPC0gcmFzdGVyKCIuLi9kYXRhL3VrY3AwOUdyaWRkZWREYXRhQW5uUHJlcGQudGlmIiwgYmFuZCA9IDcpDQp0ZW1wX21pbl8xOTYwXzkwX2FubnVhbCA8LSByYXN0ZXIoIi4uL2RhdGEvdWtjcDA5R3JpZGRlZERhdGFBbm5QcmVwZC50aWYiLCBiYW5kID0gOCkNCnRlbXBfbWF4XzE5NjBfOTBfYW5udWFsIDwtIHJhc3RlcigiLi4vZGF0YS91a2NwMDlHcmlkZGVkRGF0YUFublByZXBkLnRpZiIsIGJhbmQgPSA5KQ0KDQpgYGANCg0KIyMgcHJlcGFyZSBvYnNlcnZhdGlvbnMNCmBgYHtyfQ0KI3Jhc3Rlcjo6ZXh0cmFjdCBtZXRhZGF0YQ0KYm91bmRib3ggPC0gb2JzZXJ2YXRpb25zX1NQREZAYmJveDsgYm91bmRib3ggDQpDUlMgPC0gb2JzZXJ2YXRpb25zX1NQREZAcHJvajRzdHJpbmcNCmBgYA0KDQpgYGB7cn0NCiNmaWx0ZXIgb2JzZXJ2YXRpb25zDQpvYnNlcnZhdGlvbnMgPC0gb2JzZXJ2YXRpb25zX1NQREYNCnN1bW1hcnkob2JzZXJ2YXRpb25zKTsgY2xhc3Mob2JzZXJ2YXRpb25zKQ0KDQpgYGANCg0KDQojIyBDcmVhdGUgaW5wdXQgZGF0YXNldA0KDQpgYGB7cn0NCiNjcmVhdGUgZGF0YWZyYW1lIHdpdGggcGVhdCBkZXB0aCBhcyBmaXJzdCBjb2wNCmlucHV0LmRhdGEgPC0gZGF0YS5mcmFtZShiYm9nID0gb2JzZXJ2YXRpb25zJGJib2cpDQoNCiNyYXN0ZXI6OmV4dHJhY3QgZW52aXJvbm1lbnRhbCBhbmQgdG9wb2dyYXBoaWMgZGF0YSBmb3IgZWFjaCBwZWF0IGRlcHRoIG1lYXN1cmVtZW50DQppbnB1dC5kYXRhJGVsZXYgPC0gcmFzdGVyOjpleHRyYWN0KA0KICBlbGV2LCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSRhc3BlY3QgPC0gcmFzdGVyOjpleHRyYWN0KA0KICBhc3BlY3QsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pDQppbnB1dC5kYXRhJHNsb3BlIDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgc2xvcGUsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pDQppbnB1dC5kYXRhJG91dGZsb3cgPC0gcmFzdGVyOjpleHRyYWN0KA0KICBvdXRmbG93LCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSRpbmZsb3cgPC0gcmFzdGVyOjpleHRyYWN0KA0KICBpbmZsb3csIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pDQppbnB1dC5kYXRhJHN1cmYgPC0gcmFzdGVyOjpleHRyYWN0KA0KICBzdXJmLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSRtb29ybGluZSA8LSByYXN0ZXI6OmV4dHJhY3QoDQogIG1vb3JsaW5lLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KDQojcmFzdGVyOjpleHRyYWN0IGNsaW1hdGUgZGF0YSBmb3IgZWFjaCBwZWF0IGRlcHRoIG1lYXN1cmVtZW50DQppbnB1dC5kYXRhJGdkZCA8LSByYXN0ZXI6OmV4dHJhY3QoDQogIGdkZF8xOTYwXzkwX2FubiwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSkNCmlucHV0LmRhdGEkZ3NsIDwtIHJhc3Rlcjo6ZXh0cmFjdCgNCiAgZ3NsXzE5NjBfOTBfYW5uLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSRyYWluX2FubiA8LSByYXN0ZXI6OmV4dHJhY3QoDQogIHJhaW5fMTk2MF85MF9hbm51YWwsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pDQppbnB1dC5kYXRhJHJhaW5fZGFpbHkgPC0gcmFzdGVyOjpleHRyYWN0KA0KICByYWluX2RhaWx5X21lYW5fMTk2MF85MF9hbm51YWwsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pDQppbnB1dC5kYXRhJHJhaW5kYXlzXzEwbW0gPC0gcmFzdGVyOjpleHRyYWN0KA0KICByYWluZGF5c18xMG1tXzE5NjBfOTBfYW5udWFsLCBjb29yZGluYXRlcyhvYnNlcnZhdGlvbnMpWywxOjJdKQ0KaW5wdXQuZGF0YSRyYWluZGF5c18xbW0gPC0gcmFzdGVyOjpleHRyYWN0KA0KICByYWluZGF5c18xbW1fMTk2MF85MF9hbm51YWwsIGNvb3JkaW5hdGVzKG9ic2VydmF0aW9ucylbLDE6Ml0pDQppbnB1dC5kYXRhJHRlbXBfbWVhbiA8LSByYXN0ZXI6OmV4dHJhY3QoDQogIHRlbXBfbWVhbl8xOTYwXzkwX2FubnVhbCwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSkNCmlucHV0LmRhdGEkdGVtcF9taW4gPC0gcmFzdGVyOjpleHRyYWN0KA0KICB0ZW1wX21pbl8xOTYwXzkwX2FubnVhbCwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSkNCmlucHV0LmRhdGEkdGVtcF9tYXggPC0gcmFzdGVyOjpleHRyYWN0KA0KICB0ZW1wX21heF8xOTYwXzkwX2FubnVhbCwgY29vcmRpbmF0ZXMob2JzZXJ2YXRpb25zKVssMToyXSkNCmBgYA0KDQojIyMgcmVtb3ZlIGVycm9ycyBhbmQgb3V0bGllcnMgZnJvbSB0cmFpbmluZyBkYXRhDQpgYGB7cn0NCnN1bW1hcnkoaW5wdXQuZGF0YSkNCmBgYA0KDQpsb29rcyBmaW5lDQoNCiMjIGV4cG9ydCB0byBmaWxlDQoNCmBgYHtyfQ0Kc2F2ZShpbnB1dC5kYXRhLCBmaWxlPSIuLi9kYXRhL2lucHV0LmRhdGEucmRzIikNCndyaXRlLmNzdihpbnB1dC5kYXRhLCBmaWxlID0gIi4uL2RhdGEvaW5wdXRfZGF0YS5jc3YiLCByb3cubmFtZXMgPSBGKQ0KYGBgDQo=</div>
 
 
 
