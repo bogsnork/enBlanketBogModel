@@ -16,9 +16,9 @@ library(doParallel)
 ## Load data
 ```{r}
 # model
-load("../data/models/Mrf6final.rds")
-Model <- M.rf.7.final 
-rm(M.rf.7.final)
+load("../data/models/Mrf8bfinal.rds")
+Model <- M.rf.8b.final 
+rm(M.rf.8b.final)
 
 #predictors
 
@@ -51,24 +51,25 @@ make a raster stack
 Model$coefnames
 
 predictors <- stack(
-  elev, aspect, slope, outflow, inflow, surf, moorline,
+  elev, aspect, slope, outflow, inflow, 
   gdd_1960_90_ann, gsl_1960_90_ann,
-  rain_1960_90_annual, rain_daily_mean_1960_90_annual,
-  raindays_10mm_1960_90_annual, raindays_1mm_1960_90_annual,
+  rain_1960_90_annual, 
+  raindays_10mm_1960_90_annual, 
   temp_mean_1960_90_annual, temp_min_1960_90_annual, 
   temp_max_1960_90_annual
 )
 
-names(predictors) <- c("elev", "aspect", "slope", "outflow", "inflow", "surf", "moorline",
-                       "gdd", "gsl", "rain_ann", "rain_daily", "raindays_10mm", 
-                       "raindays_1mm", "temp_mean", "temp_min", "temp_max")
+names(predictors) <- c("elev", "aspect", "slope", "outflow", "inflow",
+                       "gdd", "gsl", "rain_ann", "raindays_10mm", 
+                       "temp_mean", "temp_min", "temp_max")
 ```
 
 crop to training data extent
 
 ```{r}
 #load observations to get extent
-observationsSPDF <- readOGR(dsn = "../data/FEP_points/Catchment_FEP_OS_TrainingPoints_final_clean.shp", verbose = TRUE)
+observationsSPDF <- readOGR(dsn = "../data/observations.shp", verbose = TRUE)
+
 boundbox <- observationsSPDF@bbox; boundbox 
 
 predictors <- raster::crop(x = predictors, y = boundbox)
@@ -80,7 +81,7 @@ predictors <- raster::crop(x = predictors, y = boundbox)
 output <- raster::predict(predictors, Model, type="prob", progress="text", 
                           response = "vote", index = 2)
 
-writeRaster(x = output, filename = "../outputs/BlanketBogRFModel7a.tif")
+writeRaster(x = output, filename = "../outputs/BlanketBogRFModel8b.tif")
 
 plot(output)
 
