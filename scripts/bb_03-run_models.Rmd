@@ -35,9 +35,6 @@ getDoParWorkers()
 
 #### Make training and test set
 
-
-
-
 ```{r}
 library(caret)
 set.seed(123)
@@ -55,43 +52,56 @@ table(testing$bbog)
 #### run model
 Need the latest version of caret from github to avoid known bug.
 ```{r}
-M.rf.7 <- train(bbog ~ .,
-                data=training, 
+#run with moorland line but drop some rainfall varialbes
+training8a <- training[!(names(training) %in% c("surf", "rain_daily", "raindays_1mm"))]
+M.rf.8a <- train(bbog ~ .,
+                data= training8a, 
                 method = "rf")
 
-save(M.rf.7, file = "../data/models/Mrf7.rds")
+save(M.rf.8a, file = "../data/models/Mrf8a.rds")
 
-M.rf.7
+#run without moorland line
+training8b <- training[!(names(training) %in% c("moorline", "surf", "rain_daily", "raindays_1mm"))] 
+
+M.rf.8b <- train(bbog ~ .,
+                data= training8b, 
+                method = "rf")
+
+save(M.rf.8b, file = "../data/models/Mrf8b.rds")
+
+
+M.rf.8b; M.rf.8b
 ```
 
 
 
 ```{r}
-plot(varImp(object= M.rf.7), main= "RF - Variable Importance")
+plot(varImp(object= M.rf.8a), main= "RF - Variable Importance")
+plot(varImp(object= M.rf.8b), main= "RF - Variable Importance")
 ```
 
 ### Predict from model
 
 ```{r}
 #Predictions
-predictions <- caret::predict.train(object = M.rf.7, newdata = testing, type="prob", index = "present")
-#table(predictions)
-
-#confusionMatrix(predictions, testing[,"bbog"])
+predictions8a <- caret::predict.train(object = M.rf.8a, newdata = testing, type="prob", index = "present")
+predictions8b <- caret::predict.train(object = M.rf.8a, newdata = testing, type="prob", index = "present")
 ```
 
 ### run final model
 
 ```{r}
-M.rf.7.final <- train(bbog ~ .,
-                data = input.data,
+input.data8b <- input.data[!(names(input.data) %in% c("moorline", "surf", "rain_daily", "raindays_1mm"))] 
+
+M.rf.8b.final <- train(bbog ~ .,
+                data = input.data8b,
                 method = "rf")
 
-save(M.rf.7.final, file = "../data/models/Mrf7final.rds")
+save(M.rf.8b.final, file = "../data/models/Mrf8bfinal.rds")
 
-M.rf.7.final
+M.rf.8b.final
 
-M.rf.7.final$coefnames
+M.rf.8b.final$coefnames
 ```
 
 
