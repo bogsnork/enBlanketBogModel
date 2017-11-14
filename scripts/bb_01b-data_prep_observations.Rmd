@@ -9,6 +9,7 @@ output: html_notebook
 library(raster)
 library(rgdal)
 library(tidyverse)
+library(rgeos)
 ```
 
 
@@ -123,7 +124,7 @@ yes, it does cover all of England.
 # Export
 
 ```{r}
-write.csv(x = FEP_bb, file = "../data/FEP_bb.csv", row.names = FALSE)
+#write.csv(x = FEP_bb, file = "../data/FEP_bb.csv", row.names = FALSE)
 ```
 
 # further processing in ArcGIS
@@ -144,4 +145,55 @@ write.csv(x = FEP_bb, file = "../data/FEP_bb.csv", row.names = FALSE)
     * output feature class: FEP_bb_RLRparcels.shp
 * Create additional presences
     * Create Random Points tool
-    * 
+    * constrain by FEP_bb_RLRparcels.shp
+    * 5 points per parcel
+    * output feature class: "FEP_bb_random_pts.shp" 
+* Create non-PHI blanket bog area for training data (if training on a specific area)
+    * Erase tool
+    * Erase "PHI Blanket Bog" from "YD_pilot_boundary.shp"
+    * output feature class: "YD_pilot_no_PHIBB.shp"  
+* Create additional absences
+    * Create random Points tool
+    * constrain by "YD_pilot_no_PHIBB.shp"  
+    * 200 points
+    * output feature class: "not_bb_random_pts.shp" 
+
+
+```{r}
+list.files(path = "../data", pattern = ".shp")
+```
+
+## Import processed data    
+```{r}
+#save the shapefile into an object
+FEP_bb_random_pts_SPDF <- readOGR(dsn = "../data/FEP_bb_random_pts.shp", verbose = TRUE)
+not_bb_random_pts_SPDF <- readOGR(dsn = "../data/not_bb_random_pts.shp", verbose = TRUE)
+YD_pilot_boundary_SPDF <- readOGR(dsn = "../data/YD_pilot_boundary.shp", verbose = TRUE)
+
+#remove superfluous column
+not_bb_random_pts_SPDF$b_bog <- NULL
+
+#populate with common attribute
+FEP_bb_random_pts_SPDF$bbog <- rep("present", nrow(FEP_bb_random_pts_SPDF))
+not_bb_random_pts_SPDF$bbog <- rep("absent", nrow(not_bb_random_pts_SPDF))
+```
+
+
+## Prepare
+
+```{r}
+# cut random FEP points to study boundary
+FEP_bb_random_pts_SPDF <- crop(FEP_bb_random_pts_SPDF, extent(YD_pilot_boundary_SPDF))
+plot(FEP_bb_random_pts_SPDF)
+plot(YD_pilot_boundary_SPDF, add = TRUE)
+
+```
+
+```{r}
+#join the presences and absences together in a single dataframe
+
+observations_SPDF <- rbind(FEP_bb_random_pts_SPDF, not_bb_random_pts_SPDF)
+
+plot(observations_SPDF)
+```
+
