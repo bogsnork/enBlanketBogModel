@@ -1,0 +1,87 @@
+---
+title: 'England Blanket Bog Model: Data Preparation: Observations using peat depth data'
+output: html_notebook
+---
+
+
+## Packages 
+```{r, include=FALSE}
+library(raster)
+library(rgdal)
+library(tidyverse)
+library(rgeos)
+```
+
+
+## Import data ----
+```{r}
+list.files(path = "../data", pattern = ".shp")
+
+observationsSPDF <- readOGR(dsn = "../data/peat_depth_survey_data_noGPR.shp", verbose = TRUE)
+
+model.area <- readOGR(dsn = "../data/YD_pilot_boundary.shp")
+no_PHIBB <- readOGR(dsn = "../data/YD_pilot_no_PHIBB.shp")
+```
+
+have a look: 
+```{r}
+dim(observationsSPDF)
+levels(observationsSPDF$PEATTYPE)
+
+```
+
+
+
+## Filter
+
+Filter out all non-blanket bog records and crop to model area
+
+```{r}
+presences <- observationsSPDF[which(observationsSPDF$PEATTYPE == "Upland blanket bog peat"),]
+
+boundbox <- model.area@bbox
+presences <- raster::crop(x = presences, y = boundbox)
+
+#remove variables and include a new bbog variable
+presences$bbog <- "present"
+presences$bbog <- as.factor(presences$bbog)
+presences <- presences[,"bbog"]
+```
+
+
+## Create absences
+
+```{r}
+set.seed(123)
+absences <-   SpatialPointsDataFrame(
+  coords = spsample(x = no_PHIBB, n = 1000, type = "random"), 
+  data = data.frame(bbog = rep("absent", 1000)), 
+  proj4string = proj4string(presences))
+
+absences <- absences[,"bbog"]
+absences
+
+plot(absences)
+```
+
+## combine absences and observations
+```{r}
+dim(presences)
+dim(absences)
+names(absences); names(presences)
+str(absences); str(presences)
+
+#need to drop z value from presences
+presences@coords <- presences@coords[,1:2]
+
+observations <- rbind.SpatialPointsDataFrame(presences, absences)
+
+```
+
+
+# Export
+
+```{r}
+#writeOGR(obj = observations, dsn = "../data/peat_depth_presabs_YD.shp", driver = "ESRI Shapefile", verbose = FALSE, layer = "observations")
+```
+
