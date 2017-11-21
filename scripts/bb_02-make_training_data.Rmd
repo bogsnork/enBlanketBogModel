@@ -16,7 +16,7 @@ library(tidyverse)
 ### Import observations: land classification file 
 ```{r}
 #save the shapefile into an object
-observationsSPDF <- readOGR(dsn = "../data/observations.shp", verbose = TRUE)
+observations <- readOGR(dsn = "../data/peat_depth_presabs_YD.shp", verbose = TRUE)
 ```
 
 ### Import predictor data
@@ -49,13 +49,12 @@ temp_max_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band 
 ## prepare observations
 ```{r}
 #raster::extract metadata
-boundbox <- observations_SPDF@bbox; boundbox 
-CRS <- observations_SPDF@proj4string
+boundbox <- observations@bbox; boundbox 
+CRS <- observations@proj4string
 ```
 
 ```{r}
 #filter observations
-observations <- observations_SPDF
 summary(observations); class(observations)
 
 ```

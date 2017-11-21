@@ -17,7 +17,7 @@ library(doParallel)
 ```{r}
 # model
 #load("../data/models/Mrf7final.rds")
-Model <- M.rf.7.final 
+Model <- M.rf.9a.final 
 
 
 #predictors
@@ -69,7 +69,7 @@ crop to training data extent
 ```{r}
 #load observations to get extent
 #observationsSPDF <- readOGR(dsn = "../data/observations.shp", verbose = TRUE)
-boundbox <- observationsSPDF@bbox; boundbox 
+boundbox <- observations@bbox; boundbox 
 
 predictors <- raster::crop(x = predictors, y = boundbox)
 ```
@@ -80,7 +80,7 @@ predictors <- raster::crop(x = predictors, y = boundbox)
 output <- raster::predict(predictors, Model, type="prob", progress="text", 
                           response = "vote", index = 2)
 
-writeRaster(x = output, filename = "../outputs/BlanketBogRFModel7b.tif")
+writeRaster(x = output, filename = "../outputs/BlanketBogRFModel9a.tif")
 
 plot(output)
 
@@ -90,19 +90,19 @@ plot(output)
 # Predict a number of models
 
 ```{r}
-output <- raster::predict(predictors, M.rf.8a.final, type="prob", progress="text", 
-                          response = "vote", index = 2)
-writeRaster(x = output, filename = "../outputs/BlanketBogRFModel8a.tif")
-plot(output)
-
-output <- raster::predict(predictors, M.rf.8c.final, type="prob", progress="text", 
-                          response = "vote", index = 2)
-writeRaster(x = output, filename = "../outputs/BlanketBogRFModel8c.tif")
-plot(output)
-
-output <- raster::predict(predictors, M.rf.8d.final, type="prob", progress="text", 
-                          response = "vote", index = 2)
-writeRaster(x = output, filename = "../outputs/BlanketBogRFModel8d.tif")
-plot(output)
+# output <- raster::predict(predictors, M.rf.8a.final, type="prob", progress="text", 
+#                           response = "vote", index = 2)
+# writeRaster(x = output, filename = "../outputs/BlanketBogRFModel8a.tif")
+# plot(output)
+# 
+# output <- raster::predict(predictors, M.rf.8c.final, type="prob", progress="text", 
+#                           response = "vote", index = 2)
+# writeRaster(x = output, filename = "../outputs/BlanketBogRFModel8c.tif")
+# plot(output)
+# 
+# output <- raster::predict(predictors, M.rf.8d.final, type="prob", progress="text", 
+#                           response = "vote", index = 2)
+# writeRaster(x = output, filename = "../outputs/BlanketBogRFModel8d.tif")
+# plot(output)
 ```
 
