@@ -19,6 +19,7 @@ library(doParallel)
 ## Load data
 ```{r}
 load(file = "../data/input.data.rds")
+summary(input.data)
 ```
 
 ## Start Parallel Processing
@@ -54,41 +55,41 @@ Need the latest version of caret from github to avoid known bug.
 ```{r}
 
 #run without moorland line
-training9a <- training[!(names(training) %in% c("moorline"))] 
+training10a <- training[!(names(training) %in% c("moorline"))] 
 
-M.rf.9a <- train(bbog ~ .,
-                data= training9a, 
+M.rf.10a <- train(bbog ~ .,
+                data= training10a, 
                 method = "rf")
-save(M.rf.9a, file = "../data/models/Mrf9a.rds")
+save(M.rf.10a, file = "../data/models/Mrf10a.rds")
 
-M.rf.9a
+M.rf.10a
 ```
 
 
 
 ```{r}
-plot(varImp(object= M.rf.9a), main= "RF - Variable Importance")
+plot(varImp(object= M.rf.10a), main= "RF - Variable Importance")
 ```
 
 ### Predict from model
 
 ```{r}
 #Predictions
-predictions9a <- caret::predict.train(object = M.rf.9a, newdata = testing, type="prob", index = "present")
+predictions10a <- caret::predict.train(object = M.rf.10a, newdata = testing, type="prob", index = "present")
 ```
 
 
 ### run final models
 
 ```{r}
-input.data.9a <- input.data[names(input.data) %in% names(training9a)] 
-M.rf.9a.final <- train(bbog ~ .,
-                data = input.data.9a,
+input.data.10a <- input.data[names(input.data) %in% names(training10a)] 
+M.rf.10a.final <- train(bbog ~ .,
+                data = input.data.10a,
                 method = "rf")
-save(M.rf.9a.final, file = "../data/models/Mrf9afinal.rds")
+save(M.rf.10a.final, file = "../data/models/Mrf10afinal.rds")
 
 
-M.rf.9a.final
+M.rf.10a.final
 ```
 
 

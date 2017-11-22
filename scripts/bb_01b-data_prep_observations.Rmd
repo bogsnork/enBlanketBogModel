@@ -204,7 +204,7 @@ table(observations_SPDF$bbog)
 ## export
 
 ```{r}
-writeOGR(obj = observations_SPDF, dsn = "../data/observations.shp", driver = "ESRI Shapefile", 
+writeOGR(obj = observations_SPDF, dsn = "../data/FEP_presabs_YD.shp.shp", driver = "ESRI Shapefile", 
          layer = "observations_SPDF")
 ```
 

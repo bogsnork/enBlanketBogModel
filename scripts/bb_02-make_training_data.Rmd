@@ -16,7 +16,9 @@ library(tidyverse)
 ### Import observations: land classification file 
 ```{r}
 #save the shapefile into an object
-observations <- readOGR(dsn = "../data/peat_depth_presabs_YD.shp", verbose = TRUE)
+peat_depth_presabs <- readOGR(dsn = "../data/peat_depth_presabs_YD.shp", verbose = TRUE)
+
+FEP_presabs <- readOGR(dsn = "../data/FEP_presabs_YD.shp.shp", verbose = TRUE)
 ```
 
 ### Import predictor data
@@ -47,6 +49,19 @@ temp_max_1960_90_annual <- raster("../data/ukcp09GriddedDataAnnPrepd.tif", band 
 ```
 
 ## prepare observations
+
+merge observations from different sources
+```{r}
+FEP_presabs <- FEP_presabs[,"bbog"] #save only required column
+
+observations <- rbind.SpatialPointsDataFrame(FEP_presabs, peat_depth_presabs)
+
+observations
+plot(observations, col = observations$bbog, pch = 1, cex = 0.2)
+```
+
+
+
 ```{r}
 #raster::extract metadata
 boundbox <- observations@bbox; boundbox 

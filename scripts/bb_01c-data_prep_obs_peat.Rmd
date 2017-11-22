@@ -48,14 +48,23 @@ presences$bbog <- as.factor(presences$bbog)
 presences <- presences[,"bbog"]
 ```
 
+reduce it down to avoid overfitting
+
+```{r}
+presences <- presences[sample(1:length(presences),500),]
+presences
+plot(presences)
+```
+
+
 
 ## Create absences
 
 ```{r}
 set.seed(123)
 absences <-   SpatialPointsDataFrame(
-  coords = spsample(x = no_PHIBB, n = 1000, type = "random"), 
-  data = data.frame(bbog = rep("absent", 1000)), 
+  coords = spsample(x = no_PHIBB, n = 500, type = "random"), 
+  data = data.frame(bbog = rep("absent", 500)), 
   proj4string = proj4string(presences))
 
 absences <- absences[,"bbog"]
@@ -75,6 +84,8 @@ str(absences); str(presences)
 presences@coords <- presences@coords[,1:2]
 
 observations <- rbind.SpatialPointsDataFrame(presences, absences)
+
+plot(observations)
 
 ```
 

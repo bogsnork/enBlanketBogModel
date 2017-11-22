@@ -17,7 +17,7 @@ library(doParallel)
 ```{r}
 # model
 #load("../data/models/Mrf7final.rds")
-Model <- M.rf.9a.final 
+Model <- M.rf.10a.final 
 
 
 #predictors
@@ -80,7 +80,7 @@ predictors <- raster::crop(x = predictors, y = boundbox)
 output <- raster::predict(predictors, Model, type="prob", progress="text", 
                           response = "vote", index = 2)
 
-writeRaster(x = output, filename = "../outputs/BlanketBogRFModel9a.tif")
+writeRaster(x = output, filename = "../outputs/BlanketBogRFModel10a.tif", overwrite = TRUE)
 
 plot(output)
 
