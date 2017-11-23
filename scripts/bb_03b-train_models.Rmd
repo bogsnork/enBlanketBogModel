@@ -199,8 +199,26 @@ myBiomodProj <- BIOMOD_Projection(myBiomodModelOut, new.env = predictors, proj.n
 ```
 
 ```{r}
-plot(myBiomodProj, str.grep = "GLM")
+plot(myBiomodProj, str.grep = "Full_GLM")
 ```
+
+
+```{r}
+list.files(path = "../scripts/blanket.bog/proj_current", pattern = "gri")
+```
+
+```{r}
+myBiomodProj@proj@val@layers
+plot(myBiomodProj@proj@val@layers[[6]])
+```
+
+
+```{r}
+#write GLM to file
+writeRaster(myBiomodProj@proj@val@layers[[6]], filename = "../outputs/bb_GLM_mod1a.tif", overwrite = TRUE)
+```
+
+
 
 # ensemble it
 
@@ -217,6 +235,11 @@ wmean.ras[which(wmean.ras[] < 549)] <- 0
 
 plot(wmean.ras)
 ```
+
+
+
+
+
 
 # export
 
