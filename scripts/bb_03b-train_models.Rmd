@@ -65,7 +65,7 @@ make a raster stack
 #Model$coefnames
 
 predictors <- stack(
-  elev, aspect, slope, outflow, inflow, surf, moorline,
+  elev, aspect, slope, outflow, inflow, 
   gdd_1960_90_ann, gsl_1960_90_ann,
   rain_1960_90_annual, rain_daily_mean_1960_90_annual,
   raindays_10mm_1960_90_annual, raindays_1mm_1960_90_annual,
@@ -73,7 +73,7 @@ predictors <- stack(
   temp_max_1960_90_annual
 )
 
-names(predictors) <- c("elev", "aspect", "slope", "outflow", "inflow", "surf", "moorline",
+names(predictors) <- c("elev", "aspect", "slope", "outflow", "inflow",
                        "gdd", "gsl", "rain_ann", "rain_daily", "raindays_10mm", 
                        "raindays_1mm", "temp_mean", "temp_min", "temp_max")
 ```
@@ -87,8 +87,17 @@ boundbox <- observations@bbox; boundbox
 
 predictors <- raster::crop(x = predictors, y = boundbox)
 
-predictors <- stack(predictors)
+predictors.all <- stack(predictors)
 ```
+
+subset predictors (depends on model)
+```{r}
+predictors <- raster::subset(predictors.all, c("elev", "aspect", "slope",
+                             "outflow", "inflow", "gdd", "gsl",
+                             "rain_ann", "raindays_10mm",
+                             "temp_min", "temp_max"))
+```
+
 
 ###wrangle
 ```{r}
@@ -126,13 +135,13 @@ plot(myBiomodData)
 
 # set up modelling options
 ```{r}
-myBiomodOption <- BIOMOD_ModelingOptions()     #e.g. RF = list(maxnodes = 40))
+myBiomodOption <- BIOMOD_ModelingOptions(RF = list(maxnodes = 40))
 ```
 
 # train the model
 
 ```{r}
-myBiomodModelOut <- BIOMOD_Modeling(myBiomodData, models = c("RF", "SRE", "GLM"), 
+myBiomodModelOut <- BIOMOD_Modeling(myBiomodData, models = c("RF", "GLM"), 
                                     models.options = myBiomodOption, NbRunEval = 1, 
                                     DataSplit = 70,VarImport = 3, 
                                     models.eval.meth = c("ROC", "TSS"))
@@ -148,8 +157,8 @@ myBiomodModelOut
 
 ```{r}
 myBiomodModelEval <- get_evaluations(myBiomodModelOut)
-myBiomodModelEval[,"Testing.data",,,]
-myBiomodModelEval[,"Cutoff",,,] #prediction (0:1) multiplied by 1000
+#myBiomodModelEval[,"Testing.data",,,]
+#myBiomodModelEval[,"Cutoff",,,] #prediction (0:1) multiplied by 1000
 myBiomodModelEval
 ```
 
@@ -161,13 +170,13 @@ getModelsVarImport(myBiomodModelOut)
 # plot model
 
 ```{r}
-mod.plot<-BIOMOD_LoadModels(myBiomodModelOut,models=c('SRE','RF','GLM'))
-strip.plots<-response.plot2(models=mod.plot[c(2,4,6)],
+mod.plot<-BIOMOD_LoadModels(myBiomodModelOut,models=c('RF','GLM'))
+strip.plots<-response.plot2(models=mod.plot[c(2,4)],
                             Data=get_formal_data(myBiomodModelOut,'expl.var'),
                             show.variables = get_formal_data(myBiomodModelOut,'expl.var.names'),
                             do.bivariate = F,
                             fixed.var.metric = "median",
-                            legend=F,
+                            legend=T,
                             col=rainbow(n=length(mod.plot)/2,start=.7,end=1,alpha=1),
                             display_title=F,
                             data.species = get_formal_data(myBiomodModelOut,'resp.var'))
@@ -195,7 +204,7 @@ look at weighted mean (weighted by roc score) and median (less sensitive to outl
 
 ```{r}
 myBiomodProj <- BIOMOD_Projection(myBiomodModelOut, new.env = predictors, proj.name = "current", 
-                                  selected.models = "all", binary.meth = "ROC")
+                                  selected.models = "all", binary.meth = "ROC", build.clamping.mask = FALSE)
 ```
 
 ```{r}
@@ -209,43 +218,43 @@ list.files(path = "../scripts/blanket.bog/proj_current", pattern = "gri")
 
 ```{r}
 myBiomodProj@proj@val@layers
-plot(myBiomodProj@proj@val@layers[[6]])
+plot(myBiomodProj@proj@val@layers[[2]])
 ```
 
 
 ```{r}
 #write GLM to file
-writeRaster(myBiomodProj@proj@val@layers[[6]], filename = "../outputs/bb_GLM_mod1a.tif", overwrite = TRUE)
+writeRaster(myBiomodProj@proj@val@layers[[2]], filename = "../outputs/bb_GLM_mod1b.tif", overwrite = TRUE)
 ```
 
 
 
-# ensemble it
+<!-- # ensemble it -->
 
-```{r}
-myBiomodEF <- BIOMOD_EnsembleForecasting(projection.output = myBiomodProj, EM.output = myBiomodEM) #ensemble forecast 
-```
-
-
-apply the cutoff
-```{r}
-wmean.ras <- raster("../scripts/blanket.bog/proj_current/individual_projections/blanket.bog_EMwmeanByROC_mergedAlgo_RUN1_AllData.gri")
-
-wmean.ras[which(wmean.ras[] < 549)] <- 0
-
-plot(wmean.ras)
-```
+<!-- ```{r} -->
+<!-- myBiomodEF <- BIOMOD_EnsembleForecasting(projection.output = myBiomodProj, EM.output = myBiomodEM) #ensemble forecast  -->
+<!-- ``` -->
 
 
+<!-- apply the cutoff -->
+<!-- ```{r} -->
+<!-- wmean.ras <- raster("../scripts/blanket.bog/proj_current/individual_projections/blanket.bog_EMwmeanByROC_mergedAlgo_RUN1_AllData.gri") -->
+
+<!-- wmean.ras[which(wmean.ras[] < 549)] <- 0 -->
+
+<!-- plot(wmean.ras) -->
+<!-- ``` -->
 
 
 
 
-# export
 
-```{r}
-writeRaster(wmean.ras, "../outputs/bb_EM_mod1a_wmean.tif")
-```
+
+<!-- # export -->
+
+<!-- ```{r} -->
+<!-- writeRaster(wmean.ras, "../outputs/bb_EM_mod1a_wmean.tif") -->
+<!-- ``` -->
 
 
 
