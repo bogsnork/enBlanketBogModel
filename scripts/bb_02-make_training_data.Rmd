@@ -15,7 +15,7 @@ library(tidyverse)
 
 ### Import observations: land classification file 
 ```{r}
-#save the shapefile into an object
+
 peat_depth_presabs <- readOGR(dsn = "../data/peat_depth_presabs_YD.shp", verbose = TRUE)
 
 FEP_presabs <- readOGR(dsn = "../data/FEP_presabs_YD.shp.shp", verbose = TRUE)

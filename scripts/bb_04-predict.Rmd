@@ -17,7 +17,7 @@ library(doParallel)
 ```{r}
 # model
 #load("../data/models/Mrf7final.rds")
-Model <- M.rf.10a.final 
+#Model <- M.rf.10a.final 
 
 
 #predictors

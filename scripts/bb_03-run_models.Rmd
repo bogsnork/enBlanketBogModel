@@ -78,6 +78,15 @@ plot(varImp(object= M.rf.10a), main= "RF - Variable Importance")
 predictions10a <- caret::predict.train(object = M.rf.10a, newdata = testing, type="prob", index = "present")
 ```
 
+```{r}
+plot(predictions10a$present ~ testing$bbog)
+plot(predictions10a$absent ~ testing$bbog)
+```
+
+```{r}
+confusionMatrix(predictions10a, testing$bbog)
+```
+
 
 ### run final models
 
