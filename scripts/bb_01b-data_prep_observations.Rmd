@@ -82,17 +82,17 @@ length(FEP_bb$PARCREF) - length(unique(FEP_bb$PARCREF))
 Also worth noting that there seem to be some duplicate parcel refs so we'll delete those too.   
 
 ```{r}
-FEP_bb <- FEP_data %>% 
-  filter(grepl("Blanket bog", Feature)) %>%
-  filter(hab_cov > 0.9, hab_cov <=1) %>% 
-  filter(`Feature UOM` == "ha") %>% 
-  select(-OPTCODE) %>% 
-  distinct()
-
-dim(FEP_bb)
-dim(FEP_data %>% 
-  filter(grepl("Blanket bog", Feature)) %>%
-  filter(hab_cov > 0.8))
+# FEP_bb <- FEP_data %>% 
+#   filter(grepl("Blanket bog", Feature)) %>%
+#   filter(hab_cov > 0.9, hab_cov <=1) %>% 
+#   filter(`Feature UOM` == "ha") %>% 
+#   select(-OPTCODE) %>% 
+#   distinct()
+# 
+# dim(FEP_bb)
+# dim(FEP_data %>% 
+#   filter(grepl("Blanket bog", Feature)) %>%
+#   filter(hab_cov > 0.8))
 ```
 ok, that's maybe deleted too many... hmmm
 
@@ -109,7 +109,9 @@ try another approach: does it cover all of England.  Geocoding will take some ti
 ```{r}
 FEP_grid_letters <- substr(FEP_data$PARCREF, 1, 2)
 table(FEP_grid_letters)
+```
 
+```{r}
 FEP_bb <- FEP_data %>% 
   filter(grepl("Blanket bog", Feature)) %>%
   filter(hab_cov > 0.9, hab_cov <=1) %>% 
@@ -150,13 +152,13 @@ yes, it does cover all of England.
     * output feature class: "FEP_bb_random_pts.shp" 
 * Create non-PHI blanket bog area for training data (if training on a specific area)
     * Erase tool
-    * Erase "PHI Blanket Bog" from "YD_pilot_boundary.shp"
-    * output feature class: "YD_pilot_no_PHIBB.shp"  
+    * Erase "PHI Blanket Bog" from "England_country.shp"
+    * output feature class: "England_no_phibb.shp"  
 * Create additional absences
     * Create random Points tool
-    * constrain by "YD_pilot_no_PHIBB.shp"  
-    * 200 points
-    * output feature class: "not_bb_random_pts.shp" 
+    * constrain by "England_no_phibb.shp"  
+    * 10000 points
+    * output feature class: "Eng_not_bb_random_pts.shp" 
 
 
 ```{r}
@@ -167,8 +169,8 @@ list.files(path = "../data", pattern = ".shp")
 ```{r}
 #save the shapefile into an object
 FEP_bb_random_pts_SPDF <- readOGR(dsn = "../data/FEP_bb_random_pts.shp", verbose = TRUE)
-not_bb_random_pts_SPDF <- readOGR(dsn = "../data/not_bb_random_pts.shp", verbose = TRUE)
-YD_pilot_boundary_SPDF <- readOGR(dsn = "../data/YD_pilot_boundary.shp", verbose = TRUE)
+not_bb_random_pts_SPDF <- readOGR(dsn = "../data/Eng_not_bb_random_pts.shp", verbose = TRUE)
+England_boundary_SPDF <- readOGR(dsn = "../data/England_country.shp", verbose = TRUE)
 
 #remove superfluous column
 not_bb_random_pts_SPDF$b_bog <- NULL
@@ -183,9 +185,9 @@ not_bb_random_pts_SPDF$bbog <- rep("absent", nrow(not_bb_random_pts_SPDF))
 
 ```{r}
 # cut random FEP points to study boundary
-FEP_bb_random_pts_SPDF <- crop(FEP_bb_random_pts_SPDF, extent(YD_pilot_boundary_SPDF))
-plot(FEP_bb_random_pts_SPDF)
-plot(YD_pilot_boundary_SPDF, add = TRUE)
+#FEP_bb_random_pts_SPDF <- crop(FEP_bb_random_pts_SPDF, extent(YD_pilot_boundary_SPDF))
+#plot(FEP_bb_random_pts_SPDF)
+#plot(YD_pilot_boundary_SPDF, add = TRUE)
 
 ```
 
@@ -193,8 +195,7 @@ plot(YD_pilot_boundary_SPDF, add = TRUE)
 #join the presences and absences together in a single dataframe
 
 observations_SPDF <- rbind(FEP_bb_random_pts_SPDF, not_bb_random_pts_SPDF)
-
-plot(observations_SPDF)
+observations_SPDF$CID <- NULL
 ```
 
 ```{r}
@@ -204,7 +205,6 @@ table(observations_SPDF$bbog)
 ## export
 
 ```{r}
-writeOGR(obj = observations_SPDF, dsn = "../data/FEP_presabs_YD.shp.shp", driver = "ESRI Shapefile", 
-         layer = "observations_SPDF")
+writeOGR(obj = observations_SPDF, dsn = "../data/FEP_presabs.shp", driver = "ESRI Shapefile", layer = "observations_SPDF")
 ```
 

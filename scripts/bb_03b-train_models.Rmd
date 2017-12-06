@@ -1,7 +1,9 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: 'England Blanket Bog Model: train models using Biomod2'
+output:
+  html_notebook: default
 ---
+
 
 ```{r}
 library(biomod2)
@@ -16,17 +18,17 @@ library(doParallel)
 ## Load data
 ```{r}
 ### Import observations: land classification file 
-peat_depth_presabs <- readOGR(dsn = "../data/peat_depth_presabs_YD.shp", verbose = TRUE)
+peat_depth_presabs <- readOGR(dsn = "../data/peat_depth_presabs_Eng", verbose = TRUE)
 
-FEP_presabs <- readOGR(dsn = "../data/FEP_presabs_YD.shp.shp", verbose = TRUE)
+#FEP_presabs <- readOGR(dsn = "../data/FEP_presabs_YD.shp.shp", verbose = TRUE)
 ```
 
 merge observations from different sources
 ```{r}
-FEP_presabs <- FEP_presabs[,"bbog"] #save only required column
+#FEP_presabs <- FEP_presabs[,"bbog"] #save only required column
+#observations <- rbind.SpatialPointsDataFrame(FEP_presabs, peat_depth_presabs)
 
-observations <- rbind.SpatialPointsDataFrame(FEP_presabs, peat_depth_presabs)
-
+observations <- peat_depth_presabs
 observations
 plot(observations, col = observations$bbog, pch = 1, cex = 0.2)
 ```
@@ -83,10 +85,10 @@ crop to training data extent
 ```{r}
 #load observations to get extent
 #observationsSPDF <- readOGR(dsn = "../data/observations.shp", verbose = TRUE)
-boundbox <- observations@bbox; boundbox 
-
-predictors <- raster::crop(x = predictors, y = boundbox)
-
+# boundbox <- observations@bbox; boundbox 
+# 
+# predictors <- raster::crop(x = predictors, y = boundbox)
+# 
 predictors.all <- stack(predictors)
 ```
 
@@ -198,65 +200,5 @@ getEMeval(myBiomodEM)
 ```
 
 look at weighted mean (weighted by roc score) and median (less sensitive to outliers)
-
-
-# do the projections
-
-```{r}
-myBiomodProj <- BIOMOD_Projection(myBiomodModelOut, new.env = predictors, proj.name = "current", 
-                                  selected.models = "all", binary.meth = "ROC", build.clamping.mask = FALSE)
-```
-
-```{r}
-plot(myBiomodProj, str.grep = "Full_GLM")
-```
-
-
-```{r}
-list.files(path = "../scripts/blanket.bog/proj_current", pattern = "gri")
-```
-
-```{r}
-myBiomodProj@proj@val@layers
-plot(myBiomodProj@proj@val@layers[[2]])
-```
-
-
-```{r}
-#write GLM to file
-writeRaster(myBiomodProj@proj@val@layers[[2]], filename = "../outputs/bb_GLM_mod1b.tif", overwrite = TRUE)
-```
-
-
-
-<!-- # ensemble it -->
-
-<!-- ```{r} -->
-<!-- myBiomodEF <- BIOMOD_EnsembleForecasting(projection.output = myBiomodProj, EM.output = myBiomodEM) #ensemble forecast  -->
-<!-- ``` -->
-
-
-<!-- apply the cutoff -->
-<!-- ```{r} -->
-<!-- wmean.ras <- raster("../scripts/blanket.bog/proj_current/individual_projections/blanket.bog_EMwmeanByROC_mergedAlgo_RUN1_AllData.gri") -->
-
-<!-- wmean.ras[which(wmean.ras[] < 549)] <- 0 -->
-
-<!-- plot(wmean.ras) -->
-<!-- ``` -->
-
-
-
-
-
-
-<!-- # export -->
-
-<!-- ```{r} -->
-<!-- writeRaster(wmean.ras, "../outputs/bb_EM_mod1a_wmean.tif") -->
-<!-- ``` -->
-
-
-
 
 

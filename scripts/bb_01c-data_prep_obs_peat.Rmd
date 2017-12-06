@@ -19,8 +19,8 @@ list.files(path = "../data", pattern = ".shp")
 
 observationsSPDF <- readOGR(dsn = "../data/peat_depth_survey_data_noGPR.shp", verbose = TRUE)
 
-model.area <- readOGR(dsn = "../data/YD_pilot_boundary.shp")
-no_PHIBB <- readOGR(dsn = "../data/YD_pilot_no_PHIBB.shp")
+model.area <- readOGR(dsn = "../data/England_country.shp")
+no_PHIBB <- readOGR(dsn = "../data/England_no_phibb.shp")
 ```
 
 have a look: 
@@ -51,9 +51,9 @@ presences <- presences[,"bbog"]
 reduce it down to avoid overfitting
 
 ```{r}
-presences <- presences[sample(1:length(presences),500),]
-presences
-plot(presences)
+# presences <- presences[sample(1:length(presences),500),]
+# presences
+# plot(presences)
 ```
 
 
@@ -63,8 +63,8 @@ plot(presences)
 ```{r}
 set.seed(123)
 absences <-   SpatialPointsDataFrame(
-  coords = spsample(x = no_PHIBB, n = 500, type = "random"), 
-  data = data.frame(bbog = rep("absent", 500)), 
+  coords = spsample(x = no_PHIBB, n = 1000, type = "random"), 
+  data = data.frame(bbog = rep("absent", 1000)), 
   proj4string = proj4string(presences))
 
 absences <- absences[,"bbog"]
@@ -85,7 +85,7 @@ presences@coords <- presences@coords[,1:2]
 
 observations <- rbind.SpatialPointsDataFrame(presences, absences)
 
-plot(observations)
+plot(observations, col = observations$bbog)
 
 ```
 
@@ -93,6 +93,6 @@ plot(observations)
 # Export
 
 ```{r}
-#writeOGR(obj = observations, dsn = "../data/peat_depth_presabs_YD.shp", driver = "ESRI Shapefile", verbose = FALSE, layer = "observations")
+writeOGR(obj = observations, dsn = "../data/peat_depth_presabs_Eng.shp", driver = "ESRI Shapefile", verbose = FALSE, layer = "observations")
 ```
 

@@ -1,0 +1,96 @@
+---
+title: 'England Blanket Bog Model: predict from Biomod2 models'
+output:
+  html_notebook: default
+---
+
+Crop predictor stack
+
+```{r}
+#load prediction boundary
+pred_boundary <- readOGR(dsn = "../data/YD_pilot_boundary.shp", verbose = TRUE)
+boundbox <- pred_boundary@bbox; boundbox 
+ 
+#crop predictors
+predictors_new <- raster::crop(x = predictors, y = boundbox)
+
+plot(predictors_new$elev)
+# 
+predictors_new<- stack(predictors_new)
+```
+
+
+
+# do the projections
+
+```{r}
+projname <- format(Sys.Date(), "%Y%m%d")
+
+myBiomodProj <- BIOMOD_Projection(myBiomodModelOut, 
+                                  new.env = predictors_new, 
+                                  proj.name = paste(projname), 
+                                  selected.models = "all", 
+                                  binary.meth = "ROC", 
+                                  build.clamping.mask = FALSE)
+```
+
+```{r}
+plot(myBiomodProj, str.grep = "Full_GLM")
+plot(myBiomodProj, str.grep = "Full_RF")
+```
+
+
+```{r}
+list.files(path = paste0("../scripts/blanket.bog/proj_", projname)) #, pattern = "gri")
+```
+
+```{r}
+myBiomodProj@proj@val@layers
+plot(myBiomodProj@proj@val@layers[[4]])
+```
+
+
+
+```{r}
+#write GLM to file
+writeRaster(myBiomodProj@proj@val@layers[[4]], filename = "../outputs/bb_GLM_mod2a.tif", overwrite = TRUE)
+#write RF to file 
+writeRaster(myBiomodProj@proj@val@layers[[3]], filename = "../outputs/bb_RF_mod2a.tif", overwrite = TRUE)
+```
+
+
+
+
+# ensemble it
+
+```{r}
+myBiomodEF <- BIOMOD_EnsembleForecasting(projection.output = myBiomodProj, EM.output = myBiomodEM) #ensemble forecast
+```
+
+
+
+```{r}
+
+path.models <- paste0("../scripts/blanket.bog/proj_", projname, "/individual_projections/")
+
+wmean.ras <- raster(paste0(path.models, "blanket.bog_EMwmeanByROC_mergedAlgo_Full_AllData.gri"))
+
+#wmean.ras[which(wmean.ras[] < 549)] <- 0
+
+plot(wmean.ras)
+```
+
+
+
+
+
+
+# export
+
+```{r}
+writeRaster(wmean.ras, "../outputs/bb_EM_mod2a_wmean.tif")
+
+```
+
+
+
