@@ -1,0 +1,49 @@
+---
+title: 'England Blanket Bog Model: create outputs'
+output:
+  html_notebook: default
+---
+
+##Packages
+```{r}
+library(raster)
+library(rgeos)
+library(rgdal)
+library(sp)
+```
+
+##Load data
+```{r}
+out_raster <- raster("../outputs/bb_EM_mod2a_wmean.tif")
+plot(out_raster)
+```
+
+#recode raster 
+
+to split into 95 and 99.5
+```{r}
+#reclassification matrix: 
+out_raster
+from <- c(0, 950, 995)
+to <- c(950, 995, 1000)
+becomes <- c(0, 1, 2)
+rcl_m <- cbind(from, to, becomes)
+
+
+out_raster_rec <- reclassify(out_raster, rcl = rcl_m)
+plot(out_raster_rec)
+
+#export
+writeRaster(out_raster_rec, "../outputs/bb_EM_mod2a_wmean_categorised.tif")
+```
+
+#convert to polygon
+I did this in QGIS
+
+used tool Polygonize to convert to polygons
+used tool fill holes (with threshold 15000) to remove small parcels
+
+saved as `outputs/blanket_bog_potential_YD_EM2a.shp`
+
+
+

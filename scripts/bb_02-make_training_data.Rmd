@@ -17,9 +17,18 @@ library(tidyverse)
 ```{r}
 
 peat_depth_presabs <- readOGR(dsn = "../data/peat_depth_presabs_Eng.shp", verbose = TRUE)
+peat_depth_presabs$COLOUR <- "#FFFFFF" 
+summary(peat_depth_presabs$bbog)
 
+shape <- peat_depth_presabs
+
+
+peat_depth_presabs$COLOUR[peat_depth_presabs@data$bbog == "present"] <- "navy" 
+peat_depth_presabs$COLOUR[peat_depth_presabs@data$bbog == "absent"] <- "orange" 
+plot(peat_depth_presabs, col=peat_depth_presabs$COLOUR)
 #I won't use the fep data
 #FEP_presabs <- readOGR(dsn = "../data/FEP_presabs.shp", verbose = TRUE)
+
 ```
 
 ### Import predictor data

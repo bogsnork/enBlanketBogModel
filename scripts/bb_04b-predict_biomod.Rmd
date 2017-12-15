@@ -93,4 +93,3 @@ writeRaster(wmean.ras, "../outputs/bb_EM_mod2a_wmean.tif")
 ```
 
 
-
